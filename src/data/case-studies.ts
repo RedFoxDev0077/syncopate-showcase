@@ -40,6 +40,11 @@ export type CaseStudy = {
   services: string[];
   industries: string[];
   technologies: string[];
+  client: string;
+  duration: string;
+  challenge: string;
+  solution: string[];
+  results: { value: string; label: string }[];
 };
 
 export const CASE_STUDIES: CaseStudy[] = [
@@ -53,6 +58,21 @@ export const CASE_STUDIES: CaseStudy[] = [
     services: ["Software development", "Web development"],
     industries: ["Manufacturing"],
     technologies: ["Kentico", ".NET"],
+    client: "Industrial manufacturer, USA",
+    duration: "9 months",
+    challenge:
+      "Dealers ordered configure-to-order equipment by email and spreadsheets. Quotes took days, pricing rules lived in people's heads, and the sales team had no visibility into order status.",
+    solution: [
+      "Mapped the full product configuration rule set and modelled it as a reusable pricing engine.",
+      "Built a self-service dealer portal with live inventory, tiered pricing and instant quoting.",
+      "Integrated the portal with the ERP so orders, shipments and invoices sync automatically.",
+      "Added role-based dashboards for dealers, sales reps and internal operations.",
+    ],
+    results: [
+      { value: "-85%", label: "Quote turnaround time" },
+      { value: "3x", label: "Orders processed per rep" },
+      { value: "100%", label: "Order status visibility" },
+    ],
   },
   {
     slug: "kentico-13-to-xperience-migration",
@@ -64,6 +84,21 @@ export const CASE_STUDIES: CaseStudy[] = [
     services: ["Software development", "Web development"],
     industries: ["Manufacturing"],
     technologies: ["Kentico", ".NET"],
+    client: "B2B distributor",
+    duration: "6 months",
+    challenge:
+      "An aging Kentico 13 site carried tens of thousands of SKUs, custom modules and years of content debt. The business needed a modern platform without losing SEO or taking the store offline.",
+    solution: [
+      "Audited every custom module and retired the ones no longer used by the business.",
+      "Wrote repeatable migration scripts for content types, media and product data.",
+      "Rebuilt the front end on Xperience by Kentico with a component-driven page builder.",
+      "Ran a redirect map and staged cut-over to protect organic traffic.",
+    ],
+    results: [
+      { value: "0 min", label: "Downtime at launch" },
+      { value: "-40%", label: "Page load time" },
+      { value: "98%", label: "SEO rankings retained" },
+    ],
   },
   {
     slug: "custom-employee-recognition-platform",
@@ -75,6 +110,21 @@ export const CASE_STUDIES: CaseStudy[] = [
     services: ["Software development", "Web development"],
     industries: ["Technology"],
     technologies: ["Node.js", "React"],
+    client: "HR technology startup",
+    duration: "8 weeks",
+    challenge:
+      "The founders needed a working product for a launch event two months out, with recognition feeds, a reward catalog and admin analytics.",
+    solution: [
+      "Scoped a lean MVP and cut anything that did not serve the launch demo.",
+      "Shipped weekly increments with the founders reviewing every Friday.",
+      "Built peer-to-peer kudos, points, a reward catalog and Slack notifications.",
+      "Added an admin dashboard with engagement and budget analytics.",
+    ],
+    results: [
+      { value: "8 weeks", label: "Discovery to launch" },
+      { value: "70%", label: "Weekly active employees" },
+      { value: "4.8/5", label: "User satisfaction" },
+    ],
   },
   {
     slug: "kentico-cms-for-koni",
@@ -86,6 +136,21 @@ export const CASE_STUDIES: CaseStudy[] = [
     services: ["Web development", "UI/UX design"],
     industries: ["Manufacturing", "Retail & Ecommerce"],
     technologies: ["Kentico", "Vue.js"],
+    client: "Koni",
+    duration: "12 months",
+    challenge:
+      "Multiple regional sites were maintained separately, causing duplicated content, inconsistent branding and slow campaign launches.",
+    solution: [
+      "Consolidated regional sites into one multi-market Kentico instance.",
+      "Designed a shared component library so marketers assemble pages without developers.",
+      "Rebuilt the product finder as a Vue.js application with instant filtering.",
+      "Set up localisation workflows with per-market approvals.",
+    ],
+    results: [
+      { value: "-60%", label: "Time to launch a campaign" },
+      { value: "1", label: "Platform for all markets" },
+      { value: "+25%", label: "Dealer conversions" },
+    ],
   },
   {
     slug: "pj-our-way",
@@ -95,8 +160,23 @@ export const CASE_STUDIES: CaseStudy[] = [
     image:
       "https://bitsorchestra.com/getmedia/db9e39cc-748d-4cd5-8a12-b9afb0bd5bfc/pj-ourway.webp?ext=.webp",
     services: ["Web development", "UI/UX design"],
-    industries: ["Education"],
+    industries: ["Education", "Nonprofit"],
     technologies: ["Kentico", ".NET"],
+    client: "Harold Grinspoon Foundation",
+    duration: "Ongoing partnership",
+    challenge:
+      "A growing community of young readers needed a safe, engaging platform with book selection, reviews and youth-appropriate moderation.",
+    solution: [
+      "Built monthly book selection flows with voting and personalised recommendations.",
+      "Implemented moderation queues and safeguards for user-generated content.",
+      "Optimised infrastructure for traffic spikes during selection windows.",
+      "Continuously ship new community features alongside the foundation's team.",
+    ],
+    results: [
+      { value: "50k+", label: "Young readers served" },
+      { value: "99.9%", label: "Uptime during peaks" },
+      { value: "10+ yrs", label: "Partnership" },
+    ],
   },
   {
     slug: "dynamic-document",
@@ -108,32 +188,24 @@ export const CASE_STUDIES: CaseStudy[] = [
     services: ["Software development", "UI/UX design"],
     industries: ["Manufacturing"],
     technologies: ["Kentico", ".NET"],
+    client: "Manufacturing group",
+    duration: "7 months",
+    challenge:
+      "Critical plant documentation lived on shared drives with no versioning, no approvals and no audit trail for compliance reviews.",
+    solution: [
+      "Designed a document model with revisions, approvals and expiry reminders.",
+      "Implemented role-based access down to plant and department level.",
+      "Added full-text search across scanned and digital documents.",
+      "Produced audit-ready activity logs for compliance officers.",
+    ],
+    results: [
+      { value: "-70%", label: "Time to find a document" },
+      { value: "100%", label: "Audit trail coverage" },
+      { value: "12", label: "Plants onboarded" },
+    ],
   },
 ];
 
-export const CLIENT_LOGOS = [
-  {
-    name: "Coretec Floors",
-    src: "https://bitsorchestra.com/getmedia/d574e907-bb53-41cc-afb4-35a5b659b2e9/coretec_floors.svg?ext=.svg",
-  },
-  {
-    name: "Shaw Industries",
-    src: "https://bitsorchestra.com/getmedia/3df8c6b7-5584-4caf-a6fd-ee87522e1c81/Shaw1.png?width=154&height=34&ext=.png",
-  },
-  {
-    name: "Harold Grinspoon Foundation",
-    src: "https://bitsorchestra.com/getmedia/ccfdf50c-689a-41ba-8b69-eea1b4f6822f/HGF.png?width=150&height=50&ext=.png",
-  },
-  {
-    name: "Total Tech School",
-    src: "https://bitsorchestra.com/getmedia/f4b7ea01-c1c7-458d-b358-df3f429f15c5/TotalTechNewLogo.webp?ext=.webp",
-  },
-  {
-    name: "Hiller",
-    src: "https://bitsorchestra.com/getmedia/8b220a85-3143-4bbf-8372-7e8609d64d19/hiller.png?width=160&height=48&ext=.png",
-  },
-  {
-    name: "Digitron Semiconductors",
-    src: "https://bitsorchestra.com/getmedia/e94fb822-a155-44ee-b126-3907d08fa27a/digitron.png?width=154&height=58&ext=.png",
-  },
-];
+export function getCaseStudy(slug: string) {
+  return CASE_STUDIES.find((c) => c.slug === slug);
+}
