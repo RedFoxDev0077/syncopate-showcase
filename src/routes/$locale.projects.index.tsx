@@ -3,6 +3,7 @@ import { useMemo } from "react";
 import { FilterSelect } from "@/components/projects/FilterSelect";
 import { PaginationNav } from "@/components/projects/PaginationNav";
 import { JsonLd } from "@/components/JsonLd";
+import { Reveal } from "@/components/Reveal";
 import { INDUSTRIES, PROJECTS, SERVICES, TECHNOLOGIES } from "@/data/projects";
 import { DEFAULT_LOCALE, isLocale, type Locale } from "@/i18n/config";
 import { tag } from "@/i18n/content";
@@ -198,8 +199,8 @@ function ProjectsIndexPage() {
       </div>
 
       <div className="mt-8 grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
-        {visible.map((project) => (
-          <article key={project.slug} className="group">
+        {visible.map((project, i) => (
+          <Reveal as="article" key={project.slug} delay={i * 60} className="group card-lift">
             <Link
               to="/$locale/projects/$slug"
               params={{ locale, slug: project.slug }}
@@ -233,7 +234,7 @@ function ProjectsIndexPage() {
                 </span>
               ))}
             </div>
-          </article>
+          </Reveal>
         ))}
       </div>
 

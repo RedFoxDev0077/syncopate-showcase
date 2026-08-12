@@ -55,7 +55,6 @@ export type UiStrings = {
   services: string;
   industry: string;
   technologies: string;
-  viewLiveProject: string;
   projectNotFound: string;
   projectNotFoundBody: string;
   backToAllProjects: string;
@@ -117,7 +116,6 @@ const en: UiStrings = {
   services: "Services",
   industry: "Industry",
   technologies: "Technologies",
-  viewLiveProject: "View live project",
   projectNotFound: "Project not found",
   projectNotFoundBody: "This project doesn't exist or was moved.",
   backToAllProjects: "Back to all projects",
@@ -178,7 +176,6 @@ const es: UiStrings = {
   services: "Servicios",
   industry: "Industria",
   technologies: "Tecnologías",
-  viewLiveProject: "Ver proyecto en vivo",
   projectNotFound: "Proyecto no encontrado",
   projectNotFoundBody: "Este proyecto no existe o fue movido.",
   backToAllProjects: "Volver a todos los proyectos",
@@ -239,7 +236,6 @@ const pt: UiStrings = {
   services: "Serviços",
   industry: "Setor",
   technologies: "Tecnologias",
-  viewLiveProject: "Ver projeto ao vivo",
   projectNotFound: "Projeto não encontrado",
   projectNotFoundBody: "Este projeto não existe ou foi movido.",
   backToAllProjects: "Voltar para todos os projetos",

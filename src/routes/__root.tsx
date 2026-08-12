@@ -104,7 +104,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         rel: "stylesheet",
         href: appCss,
       },
-      { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
+      // SVG first for modern browsers; .ico is the fallback for older ones.
+      { rel: "icon", href: "/favicon.svg", type: "image/svg+xml" },
+      { rel: "icon", href: "/favicon.ico", sizes: "48x48" },
+      { rel: "apple-touch-icon", href: "/apple-touch-icon.png" },
     ],
   }),
   shellComponent: RootShell,
@@ -113,11 +116,19 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
   errorComponent: ErrorComponent,
 });
 
+/**
+ * Marks the document as JavaScript-capable before first paint. The scroll
+ * reveal styles hide their elements only under `.js`, so without JS (or if this
+ * script fails) every section renders visible instead of staying blank.
+ */
+const JS_FLAG = `document.documentElement.classList.add("js")`;
+
 function RootShell({ children }: { children: ReactNode }) {
   const locale = useLocale();
   return (
     <html lang={LOCALE_TAGS[locale]}>
       <head>
+        <script dangerouslySetInnerHTML={{ __html: JS_FLAG }} />
         <HeadContent />
       </head>
       <body>

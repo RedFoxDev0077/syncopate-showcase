@@ -14,7 +14,7 @@ import { t } from "@/i18n/ui";
 import { SITE_NAME, SITE_TAGLINE } from "@/lib/seo";
 import { cn } from "@/lib/utils";
 
-const navLink = "text-sm transition-colors hover:text-primary";
+const navLink = "link-underline text-sm transition-colors hover:text-primary";
 const activeNav = { className: "text-primary" };
 
 /** Reads the locale straight from the path so the chrome works on every route. */

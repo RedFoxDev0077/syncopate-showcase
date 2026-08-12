@@ -1,6 +1,7 @@
 import { Link, createFileRoute, notFound } from "@tanstack/react-router";
-import { ArrowLeft, ExternalLink } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import { JsonLd } from "@/components/JsonLd";
+import { Reveal } from "@/components/Reveal";
 import { PROJECTS, getProject } from "@/data/projects";
 import { DEFAULT_LOCALE, isLocale, type Locale } from "@/i18n/config";
 import { tag } from "@/i18n/content";
@@ -95,7 +96,6 @@ function ProjectDetail() {
           url: localeUrl(locale, `/projects/${project.slug}`),
           inLanguage: locale,
           about: tags,
-          isBasedOn: project.sourceUrl,
           publisher: { "@type": "Organization", name: SITE_NAME },
         }}
       />
@@ -109,11 +109,22 @@ function ProjectDetail() {
           >
             <ArrowLeft className="size-4" /> {s.allProjects}
           </Link>
-          <h1 className="mt-6 max-w-3xl text-3xl font-bold leading-tight sm:text-4xl">
+          <h1
+            className="animate-enter mt-6 max-w-3xl text-3xl font-bold leading-tight sm:text-4xl"
+            style={{ animationDelay: "60ms" }}
+          >
             {project.title}
           </h1>
-          <p className="mt-4 max-w-2xl text-ink-foreground/75">{project.excerpt}</p>
-          <div className="mt-6 flex flex-wrap gap-2">
+          <p
+            className="animate-enter mt-4 max-w-2xl text-ink-foreground/75"
+            style={{ animationDelay: "140ms" }}
+          >
+            {project.excerpt}
+          </p>
+          <div
+            className="animate-enter mt-6 flex flex-wrap gap-2"
+            style={{ animationDelay: "220ms" }}
+          >
             {tags.map((v) => (
               <span
                 key={v}
@@ -127,7 +138,7 @@ function ProjectDetail() {
       </section>
 
       <div className="mx-auto max-w-6xl px-6 py-12">
-        <div
+        <Reveal
           className="overflow-hidden rounded-2xl p-4 shadow-[var(--shadow-card)]"
           style={{ backgroundImage: "var(--gradient-primary)" }}
         >
@@ -136,10 +147,10 @@ function ProjectDetail() {
             alt={project.title}
             className="aspect-[16/8] w-full rounded-xl object-cover"
           />
-        </div>
+        </Reveal>
 
         <div className="mt-12 grid gap-12 lg:grid-cols-[1fr_280px]">
-          <div>
+          <Reveal>
             <h2 className="text-2xl font-semibold">{s.theChallenge}</h2>
             <p className="mt-3 text-muted-foreground">{project.challenge}</p>
 
@@ -178,9 +189,14 @@ function ProjectDetail() {
                 )}
               </>
             )}
-          </div>
+          </Reveal>
 
-          <aside className="h-fit rounded-2xl border border-border bg-muted p-6 text-sm">
+          <Reveal
+            as="aside"
+            from="right"
+            delay={120}
+            className="h-fit rounded-2xl border border-border bg-muted p-6 text-sm"
+          >
             <dl className="space-y-4">
               {project.client && (
                 <div>
@@ -217,19 +233,10 @@ function ProjectDetail() {
                 </div>
               )}
             </dl>
-            <a
-              href={project.sourceUrl}
-              target="_blank"
-              rel="noreferrer noopener"
-              className="mt-6 inline-flex items-center gap-1.5 font-medium text-primary hover:underline"
-            >
-              {s.viewLiveProject}
-              <ExternalLink className="size-3.5" />
-            </a>
-          </aside>
+          </Reveal>
         </div>
 
-        <section className="mt-16 border-t border-border pt-10">
+        <Reveal as="section" className="mt-16 border-t border-border pt-10">
           <h2 className="text-xl font-semibold">{s.moreProjects}</h2>
           <div className="mt-6 grid gap-8 md:grid-cols-2">
             {others.map((other) => (
@@ -251,7 +258,7 @@ function ProjectDetail() {
               </Link>
             ))}
           </div>
-        </section>
+        </Reveal>
       </div>
     </main>
   );

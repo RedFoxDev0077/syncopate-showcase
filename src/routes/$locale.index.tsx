@@ -1,6 +1,7 @@
 import { Link, createFileRoute } from "@tanstack/react-router";
 import { ArrowRight, Quote, Star } from "lucide-react";
 import { JsonLd } from "@/components/JsonLd";
+import { Reveal } from "@/components/Reveal";
 import { PROFILE, REVIEW_SUMMARY, TESTIMONIALS } from "@/data/profile";
 import { PROJECTS } from "@/data/projects";
 import { DEFAULT_LOCALE, isLocale, type Locale } from "@/i18n/config";
@@ -57,21 +58,30 @@ function PortfolioHome() {
       {/* Hero — who I am, kept short; no contact details anywhere on this site. */}
       <section className="bg-ink text-ink-foreground">
         <div className="mx-auto max-w-6xl px-6 py-20 sm:py-28">
-          <p className="inline-flex items-center gap-2 rounded-full border border-ink-foreground/20 px-3 py-1 text-xs font-medium text-ink-foreground/80">
+          <p className="animate-enter inline-flex items-center gap-2 rounded-full border border-ink-foreground/20 px-3 py-1 text-xs font-medium text-ink-foreground/80">
             <span className="size-1.5 rounded-full bg-primary" />
             {profile.availability}
           </p>
 
-          <h1 className="mt-6 max-w-4xl text-4xl font-bold leading-tight tracking-tight sm:text-5xl">
+          <h1
+            className="animate-enter mt-6 max-w-4xl text-4xl font-bold leading-tight tracking-tight sm:text-5xl"
+            style={{ animationDelay: "80ms" }}
+          >
             {PROFILE.name}
             <span className="mt-2 block text-primary">{profile.headline}</span>
           </h1>
 
-          <p className="mt-6 max-w-3xl text-lg leading-relaxed text-ink-foreground/80">
+          <p
+            className="animate-enter mt-6 max-w-3xl text-lg leading-relaxed text-ink-foreground/80"
+            style={{ animationDelay: "160ms" }}
+          >
             {profile.intro}
           </p>
 
-          <dl className="mt-10 flex flex-wrap gap-x-12 gap-y-6">
+          <dl
+            className="animate-enter mt-10 flex flex-wrap gap-x-12 gap-y-6"
+            style={{ animationDelay: "240ms" }}
+          >
             {PROFILE.stats.map((stat, i) => (
               <div key={stat.label}>
                 <dt className="sr-only">{profile.statLabels[i]}</dt>
@@ -85,7 +95,10 @@ function PortfolioHome() {
             ))}
           </dl>
 
-          <div className="mt-10 flex flex-wrap items-center gap-4">
+          <div
+            className="animate-enter mt-10 flex flex-wrap items-center gap-4"
+            style={{ animationDelay: "320ms" }}
+          >
             <Link
               to="/$locale/projects"
               params={{ locale }}
@@ -104,7 +117,7 @@ function PortfolioHome() {
       {/* About */}
       <section className="mx-auto max-w-6xl px-6 py-20">
         <div className="grid gap-12 lg:grid-cols-[1fr_360px]">
-          <div>
+          <Reveal>
             <h2 className="text-2xl font-semibold tracking-tight">{s.aboutMe}</h2>
             {profile.bio.map((paragraph) => (
               <p key={paragraph} className="mt-4 leading-relaxed text-muted-foreground">
@@ -121,9 +134,14 @@ function PortfolioHome() {
                 </li>
               ))}
             </ul>
-          </div>
+          </Reveal>
 
-          <aside className="h-fit space-y-8 rounded-2xl border border-border bg-muted p-6">
+          <Reveal
+            as="aside"
+            from="right"
+            delay={120}
+            className="h-fit space-y-8 rounded-2xl border border-border bg-muted p-6"
+          >
             <div>
               <h3 className="text-sm font-semibold">{s.coreSkills}</h3>
               <dl className="mt-3 space-y-2 text-sm">
@@ -157,17 +175,19 @@ function PortfolioHome() {
                 </p>
               ))}
             </div>
-          </aside>
+          </Reveal>
         </div>
       </section>
 
       {/* Stack */}
       <section className="border-y border-border bg-muted/40">
         <div className="mx-auto max-w-6xl px-6 py-16">
-          <h2 className="text-2xl font-semibold tracking-tight">{s.whatIWorkWith}</h2>
+          <Reveal as="h2" className="text-2xl font-semibold tracking-tight">
+            {s.whatIWorkWith}
+          </Reveal>
           <div className="mt-8 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
-            {PROFILE.stack.map((group) => (
-              <div key={group.area}>
+            {PROFILE.stack.map((group, i) => (
+              <Reveal key={group.area} delay={i * 80}>
                 <h3 className="text-sm font-semibold text-primary">
                   {profile.stackAreas[group.area] ?? group.area}
                 </h3>
@@ -181,7 +201,7 @@ function PortfolioHome() {
                     </li>
                   ))}
                 </ul>
-              </div>
+              </Reveal>
             ))}
           </div>
         </div>
@@ -189,7 +209,7 @@ function PortfolioHome() {
 
       {/* Featured work */}
       <section className="mx-auto max-w-6xl px-6 py-20">
-        <div className="flex flex-wrap items-end justify-between gap-4">
+        <Reveal className="flex flex-wrap items-end justify-between gap-4">
           <div>
             <h2 className="text-2xl font-semibold tracking-tight">{s.selectedWork}</h2>
             <p className="mt-2 text-muted-foreground">{s.selectedWorkSub(PROJECTS.length)}</p>
@@ -202,11 +222,11 @@ function PortfolioHome() {
             {s.browseAllProjects}
             <ArrowRight className="size-4" />
           </Link>
-        </div>
+        </Reveal>
 
         <div className="mt-10 grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
-          {featured.map((project) => (
-            <article key={project.slug} className="group">
+          {featured.map((project, i) => (
+            <Reveal as="article" key={project.slug} delay={i * 100} className="group card-lift">
               <Link
                 to="/$locale/projects/$slug"
                 params={{ locale, slug: project.slug }}
@@ -230,7 +250,7 @@ function PortfolioHome() {
                 </h3>
               </Link>
               <p className="mt-2 text-sm text-muted-foreground">{project.excerpt}</p>
-            </article>
+            </Reveal>
           ))}
         </div>
       </section>
@@ -238,18 +258,20 @@ function PortfolioHome() {
       {/* Testimonials */}
       <section className="border-t border-border bg-muted/40">
         <div className="mx-auto max-w-6xl px-6 py-20">
-          <div className="flex flex-wrap items-center gap-3">
+          <Reveal className="flex flex-wrap items-center gap-3">
             <h2 className="text-2xl font-semibold tracking-tight">{s.whatClientsSay}</h2>
             <span className="inline-flex items-center gap-1 text-sm text-muted-foreground">
               <Star className="size-4 fill-primary text-primary" />
               {s.reviewsSummary(REVIEW_SUMMARY.rating, REVIEW_SUMMARY.count)}
             </span>
-          </div>
+          </Reveal>
 
           <div className="mt-10 grid gap-6 md:grid-cols-2">
-            {TESTIMONIALS.filter((t) => t.quote).map((testimonial) => (
-              <figure
+            {TESTIMONIALS.filter((t) => t.quote).map((testimonial, i) => (
+              <Reveal
+                as="figure"
                 key={testimonial.author}
+                delay={i * 120}
                 className="flex h-full flex-col rounded-2xl border border-border bg-background p-6"
               >
                 <Quote className="size-5 shrink-0 text-primary" />
@@ -267,7 +289,7 @@ function PortfolioHome() {
                     {TESTIMONIAL_PROJECTS[locale][testimonial.author] ?? testimonial.project}
                   </span>
                 </figcaption>
-              </figure>
+              </Reveal>
             ))}
           </div>
         </div>
