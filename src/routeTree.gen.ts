@@ -10,15 +10,29 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as LocaleRouteImport } from './routes/$locale'
+import { Route as LocaleIndexRouteImport } from './routes/$locale.index'
 import { Route as CaseStudiesIndexRouteImport } from './routes/case-studies.index'
 import { Route as CaseStudiesSplatRouteImport } from './routes/case-studies.$'
 import { Route as ProjectsIndexRouteImport } from './routes/projects.index'
 import { Route as ProjectsSlugRouteImport } from './routes/projects.$slug'
+import { Route as LocaleProjectsIndexRouteImport } from './routes/$locale.projects.index'
+import { Route as LocaleProjectsSlugRouteImport } from './routes/$locale.projects.$slug'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
+} as any)
+const LocaleRoute = LocaleRouteImport.update({
+  id: '/$locale',
+  path: '/$locale',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LocaleIndexRoute = LocaleIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => LocaleRoute,
 } as any)
 const CaseStudiesIndexRoute = CaseStudiesIndexRouteImport.update({
   id: '/case-studies/',
@@ -40,51 +54,88 @@ const ProjectsSlugRoute = ProjectsSlugRouteImport.update({
   path: '/projects/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LocaleProjectsIndexRoute = LocaleProjectsIndexRouteImport.update({
+  id: '/projects/',
+  path: '/projects/',
+  getParentRoute: () => LocaleRoute,
+} as any)
+const LocaleProjectsSlugRoute = LocaleProjectsSlugRouteImport.update({
+  id: '/projects/$slug',
+  path: '/projects/$slug',
+  getParentRoute: () => LocaleRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/$locale': typeof LocaleRouteWithChildren
   '/case-studies/$': typeof CaseStudiesSplatRoute
   '/projects/$slug': typeof ProjectsSlugRoute
+  '/$locale/': typeof LocaleIndexRoute
   '/case-studies/': typeof CaseStudiesIndexRoute
   '/projects/': typeof ProjectsIndexRoute
+  '/$locale/projects/$slug': typeof LocaleProjectsSlugRoute
+  '/$locale/projects/': typeof LocaleProjectsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/case-studies/$': typeof CaseStudiesSplatRoute
   '/projects/$slug': typeof ProjectsSlugRoute
+  '/$locale': typeof LocaleIndexRoute
   '/case-studies': typeof CaseStudiesIndexRoute
   '/projects': typeof ProjectsIndexRoute
+  '/$locale/projects/$slug': typeof LocaleProjectsSlugRoute
+  '/$locale/projects': typeof LocaleProjectsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/$locale': typeof LocaleRouteWithChildren
   '/case-studies/$': typeof CaseStudiesSplatRoute
   '/projects/$slug': typeof ProjectsSlugRoute
+  '/$locale/': typeof LocaleIndexRoute
   '/case-studies/': typeof CaseStudiesIndexRoute
   '/projects/': typeof ProjectsIndexRoute
+  '/$locale/projects/$slug': typeof LocaleProjectsSlugRoute
+  '/$locale/projects/': typeof LocaleProjectsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/$locale'
     | '/case-studies/$'
     | '/projects/$slug'
+    | '/$locale/'
     | '/case-studies/'
     | '/projects/'
+    | '/$locale/projects/$slug'
+    | '/$locale/projects/'
   fileRoutesByTo: FileRoutesByTo
   to:
-    '/' | '/case-studies/$' | '/projects/$slug' | '/case-studies' | '/projects'
-  id:
-    | '__root__'
     | '/'
     | '/case-studies/$'
     | '/projects/$slug'
+    | '/$locale'
+    | '/case-studies'
+    | '/projects'
+    | '/$locale/projects/$slug'
+    | '/$locale/projects'
+  id:
+    | '__root__'
+    | '/'
+    | '/$locale'
+    | '/case-studies/$'
+    | '/projects/$slug'
+    | '/$locale/'
     | '/case-studies/'
     | '/projects/'
+    | '/$locale/projects/$slug'
+    | '/$locale/projects/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  LocaleRoute: typeof LocaleRouteWithChildren
   CaseStudiesSplatRoute: typeof CaseStudiesSplatRoute
   ProjectsSlugRoute: typeof ProjectsSlugRoute
   CaseStudiesIndexRoute: typeof CaseStudiesIndexRoute
@@ -99,6 +150,20 @@ declare module '@tanstack/react-router' {
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/$locale': {
+      id: '/$locale'
+      path: '/$locale'
+      fullPath: '/$locale'
+      preLoaderRoute: typeof LocaleRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/$locale/': {
+      id: '/$locale/'
+      path: '/'
+      fullPath: '/$locale/'
+      preLoaderRoute: typeof LocaleIndexRouteImport
+      parentRoute: typeof LocaleRoute
     }
     '/case-studies/': {
       id: '/case-studies/'
@@ -128,11 +193,41 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProjectsSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/$locale/projects/': {
+      id: '/$locale/projects/'
+      path: '/projects'
+      fullPath: '/$locale/projects/'
+      preLoaderRoute: typeof LocaleProjectsIndexRouteImport
+      parentRoute: typeof LocaleRoute
+    }
+    '/$locale/projects/$slug': {
+      id: '/$locale/projects/$slug'
+      path: '/projects/$slug'
+      fullPath: '/$locale/projects/$slug'
+      preLoaderRoute: typeof LocaleProjectsSlugRouteImport
+      parentRoute: typeof LocaleRoute
+    }
   }
 }
 
+interface LocaleRouteChildren {
+  LocaleIndexRoute: typeof LocaleIndexRoute
+  LocaleProjectsSlugRoute: typeof LocaleProjectsSlugRoute
+  LocaleProjectsIndexRoute: typeof LocaleProjectsIndexRoute
+}
+
+const LocaleRouteChildren: LocaleRouteChildren = {
+  LocaleIndexRoute: LocaleIndexRoute,
+  LocaleProjectsSlugRoute: LocaleProjectsSlugRoute,
+  LocaleProjectsIndexRoute: LocaleProjectsIndexRoute,
+}
+
+const LocaleRouteWithChildren =
+  LocaleRoute._addFileChildren(LocaleRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  LocaleRoute: LocaleRouteWithChildren,
   CaseStudiesSplatRoute: CaseStudiesSplatRoute,
   ProjectsSlugRoute: ProjectsSlugRoute,
   CaseStudiesIndexRoute: CaseStudiesIndexRoute,

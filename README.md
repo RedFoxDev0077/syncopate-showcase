@@ -7,13 +7,16 @@ attached to freelance proposals.
 
 ## Pages
 
-| Route             | Purpose                                                                              |
-| ----------------- | ------------------------------------------------------------------------------------ |
-| `/`               | Hero + about me, stats, tech stack, selected work, client testimonials, work history |
-| `/projects`       | All 52 projects — filterable and paginated                                           |
-| `/projects/$slug` | Project detail: challenge, solution, results, stack                                  |
+Every page lives under a locale prefix — `en`, `es` or `pt`.
 
-Legacy `/case-studies` URLs redirect to their `/projects` equivalent.
+| Route                     | Purpose                                                                              |
+| ------------------------- | ------------------------------------------------------------------------------------ |
+| `/$locale`                | Hero + about me, stats, tech stack, selected work, client testimonials, work history |
+| `/$locale/projects`       | All 52 projects — filterable and paginated                                           |
+| `/$locale/projects/$slug` | Project detail: challenge, solution, results, stack                                  |
+
+`/` redirects to `/en`. Legacy `/projects` and `/case-studies` URLs redirect to their
+`/en/projects` equivalent. An unknown locale (`/fr`) is a 404 rather than a silent fallback.
 
 ## Notable behaviour
 
@@ -24,22 +27,32 @@ Legacy `/case-studies` URLs redirect to their `/projects` equivalent.
   Values outside the known vocabulary are rejected.
 - **No contact details.** By design — this site is attached to proposals and contact happens
   through the platform. There is no phone number, email, or contact form anywhere.
-- **SEO** — canonical URLs, Open Graph / Twitter cards, and JSON-LD (`Person` on the home page,
-  `CollectionPage` + `ItemList` on the index, `Article` per project).
+- **Three languages** — English, Spanish and Portuguese, including all 52 project write-ups
+  (title, excerpt, challenge, solution, results and outcomes). The language switcher keeps the
+  reader on the same page. Filter _values_ stay canonical English so a filtered URL works in any
+  language; only the labels are translated. Technology names are left untranslated.
+- **SEO** — per-locale canonical URLs, hreflang alternates (plus `x-default`), `html lang`,
+  Open Graph / Twitter cards, and JSON-LD (`Person` on the home page, `CollectionPage` +
+  `ItemList` on the index, `Article` per project).
 
 ## Project layout
 
-| Path                            | Purpose                                                |
-| ------------------------------- | ------------------------------------------------------ |
-| `src/data/profile.ts`           | Bio, skills, stack, stats, work history, testimonials. |
-| `src/data/projects.ts`          | Project content. Static and typed — no CMS or API.     |
-| `src/routes/index.tsx`          | Portfolio landing page.                                |
-| `src/routes/projects.index.tsx` | Filterable, paginated project index.                   |
-| `src/routes/projects.$slug.tsx` | Project detail page.                                   |
-| `src/components/SiteChrome.tsx` | Shared header and footer.                              |
-| `src/components/projects/`      | Filter dropdown and pagination.                        |
-| `src/components/ui/`            | shadcn/ui library (mostly unused — see Notes).         |
-| `public/projects/`              | Project images, self-hosted.                           |
+| Path                                    | Purpose                                                |
+| --------------------------------------- | ------------------------------------------------------ |
+| `src/data/profile.ts`                   | Bio, skills, stack, stats, work history, testimonials. |
+| `src/i18n/config.ts`                    | Locale list, labels and BCP 47 tags.                   |
+| `src/i18n/ui.ts`                        | UI chrome strings for all three locales.               |
+| `src/i18n/content.ts`                   | Taxonomy labels and translated profile copy.           |
+| `src/i18n/projects.{es,pt}.ts`          | Translated project copy, keyed by slug.                |
+| `src/i18n/projects.ts`                  | Merges translations over the canonical English data.   |
+| `src/data/projects.ts`                  | Project content. Static and typed — no CMS or API.     |
+| `src/routes/$locale.index.tsx`          | Portfolio landing page.                                |
+| `src/routes/$locale.projects.index.tsx` | Filterable, paginated project index.                   |
+| `src/routes/$locale.projects.$slug.tsx` | Project detail page.                                   |
+| `src/components/SiteChrome.tsx`         | Shared header and footer.                              |
+| `src/components/projects/`              | Filter dropdown and pagination.                        |
+| `src/components/ui/`                    | shadcn/ui library (mostly unused — see Notes).         |
+| `public/projects/`                      | Project images, self-hosted.                           |
 
 ## Development
 
@@ -75,6 +88,9 @@ Set `VITE_SITE_URL` to the deployed origin so canonical URLs and `og:image` reso
   editor expects the library to be present.
 - **Dark mode** tokens are complete and brand-consistent, but nothing toggles the `.dark` class
   yet.
+- **Adding a language**: add the code to `LOCALES` in `src/i18n/config.ts`, then fill in the
+  `UI`, `PROFILE_I18N` and `TAXONOMY` records (TypeScript will flag every missing key) and add a
+  `projects.<code>.ts` dictionary. Missing project keys fall back to English field by field.
 
 ## Build with Lovable
 

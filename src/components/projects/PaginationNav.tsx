@@ -1,8 +1,11 @@
 import { Link } from "@tanstack/react-router";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import type { Locale } from "@/i18n/config";
+import { t } from "@/i18n/ui";
 import { cn } from "@/lib/utils";
 
 type Props = {
+  locale: Locale;
   page: number;
   pageCount: number;
   /** Builds the search params for a given page, preserving active filters. */
@@ -29,28 +32,30 @@ function pageItems(page: number, pageCount: number): (number | null)[] {
 const base =
   "inline-flex h-9 min-w-9 items-center justify-center rounded-md px-3 text-sm font-medium transition-colors";
 
-export function PaginationNav({ page, pageCount, toPage }: Props) {
+export function PaginationNav({ locale, page, pageCount, toPage }: Props) {
   if (pageCount <= 1) return null;
+  const s = t(locale);
 
   return (
-    <nav aria-label="Pagination" className="mt-14 flex justify-center">
+    <nav aria-label={s.pagination} className="mt-14 flex justify-center">
       <ul className="flex flex-wrap items-center gap-1">
         <li>
           {page > 1 ? (
             <Link
-              to="/projects"
+              to="/$locale/projects"
+              params={{ locale }}
               search={toPage(page - 1)}
               resetScroll={false}
-              aria-label="Go to previous page"
+              aria-label={s.goToPrevious}
               className={cn(base, "gap-1 pl-2 hover:bg-accent hover:text-accent-foreground")}
             >
               <ChevronLeft className="size-4" />
-              Previous
+              {s.previous}
             </Link>
           ) : (
             <span aria-disabled className={cn(base, "gap-1 pl-2 text-muted-foreground/50")}>
               <ChevronLeft className="size-4" />
-              Previous
+              {s.previous}
             </span>
           )}
         </li>
@@ -63,10 +68,11 @@ export function PaginationNav({ page, pageCount, toPage }: Props) {
           ) : (
             <li key={item}>
               <Link
-                to="/projects"
+                to="/$locale/projects"
+                params={{ locale }}
                 search={toPage(item)}
                 resetScroll={false}
-                aria-label={`Go to page ${item}`}
+                aria-label={s.goToPage(item)}
                 aria-current={item === page ? "page" : undefined}
                 className={cn(
                   base,
@@ -84,18 +90,19 @@ export function PaginationNav({ page, pageCount, toPage }: Props) {
         <li>
           {page < pageCount ? (
             <Link
-              to="/projects"
+              to="/$locale/projects"
+              params={{ locale }}
               search={toPage(page + 1)}
               resetScroll={false}
-              aria-label="Go to next page"
+              aria-label={s.goToNext}
               className={cn(base, "gap-1 pr-2 hover:bg-accent hover:text-accent-foreground")}
             >
-              Next
+              {s.next}
               <ChevronRight className="size-4" />
             </Link>
           ) : (
             <span aria-disabled className={cn(base, "gap-1 pr-2 text-muted-foreground/50")}>
-              Next
+              {s.next}
               <ChevronRight className="size-4" />
             </span>
           )}
