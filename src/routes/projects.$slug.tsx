@@ -1,24 +1,24 @@
 import { Link, createFileRoute, notFound } from "@tanstack/react-router";
 import { ArrowLeft, ExternalLink } from "lucide-react";
 import { JsonLd } from "@/components/JsonLd";
-import { CASE_STUDIES, getCaseStudy } from "@/data/case-studies";
+import { PROJECTS, getProject } from "@/data/projects";
 import { SITE_NAME, absoluteUrl } from "@/lib/seo";
 
-export const Route = createFileRoute("/case-studies/$slug")({
+export const Route = createFileRoute("/projects/$slug")({
   loader: ({ params }) => {
-    const study = getCaseStudy(params.slug);
+    const study = getProject(params.slug);
     if (!study) throw notFound();
     return { study };
   },
   head: ({ loaderData }) => {
     if (!loaderData) {
       return {
-        meta: [{ title: "Case study not found" }, { name: "robots", content: "noindex" }],
+        meta: [{ title: "Project not found" }, { name: "robots", content: "noindex" }],
       };
     }
     const { study } = loaderData;
     const title = `${study.title} — ${SITE_NAME}`;
-    const canonical = absoluteUrl(`/case-studies/${study.slug}`);
+    const canonical = absoluteUrl(`/projects/${study.slug}`);
     // og:image must be absolute — scrapers do not resolve relative paths.
     const image = absoluteUrl(study.image);
     return {
@@ -43,10 +43,10 @@ export const Route = createFileRoute("/case-studies/$slug")({
 function CaseStudyNotFound() {
   return (
     <main className="mx-auto max-w-3xl px-6 py-24 text-center">
-      <h1 className="text-2xl font-semibold">Case study not found</h1>
-      <p className="mt-2 text-muted-foreground">This case study doesn't exist or was moved.</p>
-      <Link to="/case-studies" className="mt-6 inline-block text-primary hover:underline">
-        Back to all case studies
+      <h1 className="text-2xl font-semibold">Project not found</h1>
+      <p className="mt-2 text-muted-foreground">This project doesn't exist or was moved.</p>
+      <Link to="/projects" className="mt-6 inline-block text-primary hover:underline">
+        Back to all projects
       </Link>
     </main>
   );
@@ -57,14 +57,14 @@ function CaseStudyDetail() {
   const tags = [...study.services, ...study.industries, ...study.technologies];
 
   // Prefer studies that share a tag; top up with the newest ones if there aren't enough.
-  const related = CASE_STUDIES.filter(
+  const related = PROJECTS.filter(
     (c) =>
       c.slug !== study.slug &&
       [...c.services, ...c.industries, ...c.technologies].some((t) => tags.includes(t)),
   );
   const others = [
     ...related,
-    ...CASE_STUDIES.filter((c) => c.slug !== study.slug && !related.includes(c)),
+    ...PROJECTS.filter((c) => c.slug !== study.slug && !related.includes(c)),
   ].slice(0, 2);
 
   return (
@@ -76,7 +76,7 @@ function CaseStudyDetail() {
           headline: study.title,
           description: study.excerpt,
           image: absoluteUrl(study.image),
-          url: absoluteUrl(`/case-studies/${study.slug}`),
+          url: absoluteUrl(`/projects/${study.slug}`),
           about: tags,
           isBasedOn: study.sourceUrl,
           publisher: { "@type": "Organization", name: SITE_NAME },
@@ -86,10 +86,10 @@ function CaseStudyDetail() {
       <section className="bg-ink text-ink-foreground">
         <div className="mx-auto max-w-6xl px-6 py-14">
           <Link
-            to="/case-studies"
+            to="/projects"
             className="inline-flex items-center gap-2 text-sm text-ink-foreground/70 transition-colors hover:text-primary"
           >
-            <ArrowLeft className="size-4" /> All case studies
+            <ArrowLeft className="size-4" /> All projects
           </Link>
           <h1 className="mt-6 max-w-3xl text-3xl font-bold leading-tight sm:text-4xl">
             {study.title}
@@ -201,19 +201,19 @@ function CaseStudyDetail() {
               rel="noreferrer noopener"
               className="mt-6 inline-flex items-center gap-1.5 font-medium text-primary hover:underline"
             >
-              Read on bitsorchestra.com
+              View live project
               <ExternalLink className="size-3.5" />
             </a>
           </aside>
         </div>
 
         <section className="mt-16 border-t border-border pt-10">
-          <h2 className="text-xl font-semibold">More case studies</h2>
+          <h2 className="text-xl font-semibold">More projects</h2>
           <div className="mt-6 grid gap-8 md:grid-cols-2">
             {others.map((other) => (
               <Link
                 key={other.slug}
-                to="/case-studies/$slug"
+                to="/projects/$slug"
                 params={{ slug: other.slug }}
                 className="group"
               >

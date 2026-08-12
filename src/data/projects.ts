@@ -13,7 +13,7 @@ export type Metric = {
   label: string;
 };
 
-export type CaseStudy = {
+export type Project = {
   slug: string;
   title: string;
   excerpt: string;
@@ -68,14 +68,14 @@ const ALL_TECHNOLOGIES = [
   "Shopify",
 ] as const;
 
-export const CASE_STUDIES: CaseStudy[] = [
+export const PROJECTS: Project[] = [
   {
     slug: "b2b-manufacturing-portal-development",
     title: "B2B Manufacturing Portal for a Configure-to-Order Industrial Manufacturer",
     excerpt:
       "Extended a legacy manufacturing portal with customer self-service, warehouse workflow digitization and production visibility — without interrupting live operations.",
-    image: "/case-studies/Manufacturing-portal-teaser.webp",
-    sourceUrl: "https://bitsorchestra.com/case-studies/b2b-manufacturing-portal-development",
+    image: "/projects/Manufacturing-portal-teaser.webp",
+    sourceUrl: "https://bitsorchestra.com/projects/b2b-manufacturing-portal-development",
     services: ["Software development", "Web development"],
     industries: ["Manufacturing"],
     technologies: ["Kentico", ".NET"],
@@ -106,8 +106,8 @@ export const CASE_STUDIES: CaseStudy[] = [
     title: "Migrating a SKU-Heavy B2B Dealer Portal from Kentico 13 to Xperience by Kentico",
     excerpt:
       "A global B2B building-materials manufacturer moved a dealer portal serving 350+ distributors across 18 countries to Xperience by Kentico, preserving 12,000+ SKUs and every integration.",
-    image: "/case-studies/Kentico-13-to-Xperience-(1).webp",
-    sourceUrl: "https://bitsorchestra.com/case-studies/kentico-13-to-xperience-migration",
+    image: "/projects/Kentico-13-to-Xperience-(1).webp",
+    sourceUrl: "https://bitsorchestra.com/projects/kentico-13-to-xperience-migration",
     services: ["Software development", "Web development"],
     industries: ["Manufacturing"],
     technologies: ["Kentico", ".NET"],
@@ -139,8 +139,8 @@ export const CASE_STUDIES: CaseStudy[] = [
     title: "Building a custom employee recognition platform in 8 weeks",
     excerpt:
       "A Texas technology company replaced its locked-down recognition SaaS with a custom platform featuring rewards, gamification and HR analytics — built in eight weeks.",
-    image: "/case-studies/Kudos-Platform.webp",
-    sourceUrl: "https://bitsorchestra.com/case-studies/custom-employee-recognition-platform",
+    image: "/projects/Kudos-Platform.webp",
+    sourceUrl: "https://bitsorchestra.com/projects/custom-employee-recognition-platform",
     services: ["Software development", "Web development"],
     industries: ["Technology"],
     technologies: ["Node.js", "React"],
@@ -169,8 +169,8 @@ export const CASE_STUDIES: CaseStudy[] = [
     title: "Scalable B2B Kentico solution for Koni",
     excerpt:
       "KONI moved from a template-locked website to a widget-based Kentico architecture supporting multiple regional B2B sites, with editors assembling pages without developers.",
-    image: "/case-studies/koni-case-cover.webp",
-    sourceUrl: "https://bitsorchestra.com/case-studies/kentico-cms-for-koni",
+    image: "/projects/koni-case-cover.webp",
+    sourceUrl: "https://bitsorchestra.com/projects/kentico-cms-for-koni",
     services: ["Web development", "UI/UX design"],
     industries: ["Manufacturing", "Retail & Ecommerce"],
     technologies: ["Kentico", "Vue.js"],
@@ -200,8 +200,8 @@ export const CASE_STUDIES: CaseStudy[] = [
     title: "Scalable platform that supports Jewish literacy",
     excerpt:
       "A rebuild of the PJ Our Way platform for the Harold Grinspoon Foundation, with a dual-mode interface for children and parents and capacity for 5,000 concurrent sessions.",
-    image: "/case-studies/pj-ourway.webp",
-    sourceUrl: "https://bitsorchestra.com/case-studies/pj-our-way",
+    image: "/projects/pj-ourway.webp",
+    sourceUrl: "https://bitsorchestra.com/projects/pj-our-way",
     services: ["Web development", "UI/UX design"],
     industries: ["Education"],
     technologies: ["Kentico", ".NET"],
@@ -230,8 +230,8 @@ export const CASE_STUDIES: CaseStudy[] = [
     title: "Document management system for manufacturing client",
     excerpt:
       "A custom enterprise document management system for a global manufacturer, eliminating paper documentation and establishing a single source of truth across 50+ countries.",
-    image: "/case-studies/document-management-system.webp",
-    sourceUrl: "https://bitsorchestra.com/case-studies/dynamic-document",
+    image: "/projects/document-management-system.webp",
+    sourceUrl: "https://bitsorchestra.com/projects/dynamic-document",
     services: ["Software development", "UI/UX design"],
     industries: ["Manufacturing"],
     technologies: ["Kentico", ".NET"],
@@ -259,9 +259,8 @@ export const CASE_STUDIES: CaseStudy[] = [
     title: "Transforming Anderson Tuftex's flooring website with enterprise CMS",
     excerpt:
       "Anderson Tuftex upgraded its flooring e-commerce website with a reusable Kentico Xperience 13 template and advanced merchandising tools, removing developer dependency for daily updates.",
-    image: "/case-studies/Anderson-tuftex.webp",
-    sourceUrl:
-      "https://bitsorchestra.com/case-studies/anderson-tuftex-enterprise-cms-transformation",
+    image: "/projects/Anderson-tuftex.webp",
+    sourceUrl: "https://bitsorchestra.com/projects/anderson-tuftex-enterprise-cms-transformation",
     services: ["Web development"],
     industries: ["Manufacturing"],
     technologies: ["Kentico", ".NET Core"],
@@ -289,8 +288,8 @@ export const CASE_STUDIES: CaseStudy[] = [
     title: "Web upgrade for energy management platform FLAGA",
     excerpt:
       "A multilingual Umbraco Cloud website for FLAGA, Austria's major liquid gas supplier, with independent content management and a location-based distributor finder.",
-    image: "/case-studies/flaga.webp",
-    sourceUrl: "https://bitsorchestra.com/case-studies/flaga-energy-management-platform",
+    image: "/projects/flaga.webp",
+    sourceUrl: "https://bitsorchestra.com/projects/flaga-energy-management-platform",
     services: ["Web development"],
     industries: ["Energy"],
     technologies: ["Umbraco", ".NET Core"],
@@ -316,8 +315,8 @@ export const CASE_STUDIES: CaseStudy[] = [
     title: "E-commerce platform development for premium flooring brand",
     excerpt:
       "COREtec Floors' e-commerce site was rebuilt on Kentico 13 and React, giving marketers page-building independence and lifting traffic and conversion.",
-    image: "/case-studies/coretech.webp",
-    sourceUrl: "https://bitsorchestra.com/case-studies/coretec",
+    image: "/projects/coretech.webp",
+    sourceUrl: "https://bitsorchestra.com/projects/coretec",
     services: ["Web development"],
     industries: ["Manufacturing", "Retail & Ecommerce"],
     technologies: ["Kentico", "ASP.NET MVC"],
@@ -344,8 +343,8 @@ export const CASE_STUDIES: CaseStudy[] = [
     title: "Blockchain dashboard",
     excerpt:
       "A real-time analytics dashboard processing and visualizing vast cryptocurrency market data — transactions, wallets and NFTs — on a scalable AWS pipeline.",
-    image: "/case-studies/blockchain-dashboard.webp",
-    sourceUrl: "https://bitsorchestra.com/case-studies/blockchain-dashboard",
+    image: "/projects/blockchain-dashboard.webp",
+    sourceUrl: "https://bitsorchestra.com/projects/blockchain-dashboard",
     services: ["Web development", "AI/ML"],
     industries: ["Technology"],
     technologies: ["AWS", "Azure"],
@@ -372,9 +371,9 @@ export const CASE_STUDIES: CaseStudy[] = [
     title: "Automated system for predicting cryptocurrency market trends",
     excerpt:
       "An automated ML forecasting platform for crypto, stock and bond market trends, using adaptive models and parallelized data pipelines.",
-    image: "/case-studies/eudamonia.webp",
+    image: "/projects/eudamonia.webp",
     sourceUrl:
-      "https://bitsorchestra.com/case-studies/time-series-analysis-and-forecasting-for-cryptocur",
+      "https://bitsorchestra.com/projects/time-series-analysis-and-forecasting-for-cryptocur",
     services: ["Software development", "Web development"],
     industries: ["Technology"],
     technologies: [".NET Core", "Azure"],
@@ -400,9 +399,9 @@ export const CASE_STUDIES: CaseStudy[] = [
     title: "Invoicing process automation for leading procurement company",
     excerpt:
       "An AI-powered platform automating accounts payable and invoicing for a leading procurement company, with PEPPOL compliance and Ariba/SAP integration.",
-    image: "/case-studies/Invoicing-process-automation.webp",
+    image: "/projects/Invoicing-process-automation.webp",
     sourceUrl:
-      "https://bitsorchestra.com/case-studies/accounts-payable-and-invoicing-process-automation",
+      "https://bitsorchestra.com/projects/accounts-payable-and-invoicing-process-automation",
     services: ["AI/ML"],
     industries: [],
     technologies: [".NET Core", "Angular"],
@@ -429,8 +428,8 @@ export const CASE_STUDIES: CaseStudy[] = [
     title: "Integrated web and mobile solutions for doors services company",
     excerpt:
       "An integrated web and mobile platform for Door Services Corporation, streamlining location-based service search, multi-brand content management and product information.",
-    image: "/case-studies/Door-services.webp",
-    sourceUrl: "https://bitsorchestra.com/case-studies/door-services",
+    image: "/projects/Door-services.webp",
+    sourceUrl: "https://bitsorchestra.com/projects/door-services",
     services: ["Mobile app development"],
     industries: [],
     technologies: ["Kentico", "ASP.NET MVC"],
@@ -456,8 +455,8 @@ export const CASE_STUDIES: CaseStudy[] = [
     title: "ML based SaaS solution for students enrollment prediction",
     excerpt:
       "A machine-learning SaaS platform letting universities track enrollment and predict student enrollment likelihood from integrated warehouse and CRM data.",
-    image: "/case-studies/enrollme.webp",
-    sourceUrl: "https://bitsorchestra.com/case-studies/ml-based-saas",
+    image: "/projects/enrollme.webp",
+    sourceUrl: "https://bitsorchestra.com/projects/ml-based-saas",
     services: ["Software development"],
     industries: [],
     technologies: [".NET Core", "Azure"],
@@ -484,8 +483,8 @@ export const CASE_STUDIES: CaseStudy[] = [
     title: "Customer churn forecasting",
     excerpt:
       "A dynamic churn prediction model for a leading Azerbaijani financial institution, identifying at-risk loan customers and driving targeted retention.",
-    image: "/case-studies/customer-churn-forecasting.webp",
-    sourceUrl: "https://bitsorchestra.com/case-studies/customer-churn",
+    image: "/projects/customer-churn-forecasting.webp",
+    sourceUrl: "https://bitsorchestra.com/projects/customer-churn",
     services: ["AI/ML"],
     industries: [],
     technologies: [],
@@ -510,8 +509,8 @@ export const CASE_STUDIES: CaseStudy[] = [
     title: "Redesign website for ecommerce flooring company",
     excerpt:
       "A UI/UX redesign of GAT Flooring's e-commerce website around a new brand identity, with restructured navigation and a dedicated product selection flow.",
-    image: "/case-studies/gat-flooring.webp",
-    sourceUrl: "https://bitsorchestra.com/case-studies/gat-flooring",
+    image: "/projects/gat-flooring.webp",
+    sourceUrl: "https://bitsorchestra.com/projects/gat-flooring",
     services: ["UI/UX design"],
     industries: [],
     technologies: [],
@@ -534,8 +533,8 @@ export const CASE_STUDIES: CaseStudy[] = [
     title: "Migration to Kentico Xperience 13 Core for the State Agency",
     excerpt:
       "A state agency migrated from end-of-life Kentico 12 Portal Engine to Xperience 13 Core, cutting average response time by 93.7% with under 10 minutes of visible downtime.",
-    image: "/case-studies/migration-to-kentico-xperience.webp",
-    sourceUrl: "https://bitsorchestra.com/case-studies/kenticomigration",
+    image: "/projects/migration-to-kentico-xperience.webp",
+    sourceUrl: "https://bitsorchestra.com/projects/kenticomigration",
     services: [],
     industries: [],
     technologies: ["Kentico", ".NET Core"],
@@ -566,8 +565,8 @@ export const CASE_STUDIES: CaseStudy[] = [
     title: "Development web dispatcher app to manage crossing guards",
     excerpt:
       "A web dispatcher application for A.S.P. Incorporated managing school crossing guard scheduling, assignment and real-time location tracking across Toronto.",
-    image: "/case-studies/asp-guard.webp",
-    sourceUrl: "https://bitsorchestra.com/case-studies/asp-guard",
+    image: "/projects/asp-guard.webp",
+    sourceUrl: "https://bitsorchestra.com/projects/asp-guard",
     services: ["Software development"],
     industries: [],
     technologies: [".NET Core", "AWS"],
@@ -593,8 +592,8 @@ export const CASE_STUDIES: CaseStudy[] = [
     title: "Development mobile dispatcher app for managing crossing guards",
     excerpt:
       "The XGuard mobile dispatcher app for ASP Security Services, automating crossing guard tracking with reliable location services on iOS and Android.",
-    image: "/case-studies/asp-guard-mobile.webp",
-    sourceUrl: "https://bitsorchestra.com/case-studies/asp-guard-(mobile-app)",
+    image: "/projects/asp-guard-mobile.webp",
+    sourceUrl: "https://bitsorchestra.com/projects/asp-guard-(mobile-app)",
     services: ["Software development", "Mobile app development"],
     industries: [],
     technologies: [".NET Core", "AWS"],
@@ -620,8 +619,8 @@ export const CASE_STUDIES: CaseStudy[] = [
     title: "Subsea safety valve leak rate and leak fluid identification for environmental safety",
     excerpt:
       "An AI and machine learning system detecting leaks in subsea safety valves early, preventing equipment failure and environmental damage in offshore oil and gas operations.",
-    image: "/case-studies/leak-rate-ml.webp",
-    sourceUrl: "https://bitsorchestra.com/case-studies/leak-control",
+    image: "/projects/leak-rate-ml.webp",
+    sourceUrl: "https://bitsorchestra.com/projects/leak-control",
     services: ["Software development", "AI/ML"],
     industries: [],
     technologies: ["AWS"],
@@ -646,8 +645,8 @@ export const CASE_STUDIES: CaseStudy[] = [
     title: "Car service mobile application development for Naoo",
     excerpt:
       "A roadside assistance mobile app for Naoo, an Australian vehicle service platform, letting users compare fuel prices and call repair and tow services.",
-    image: "/case-studies/Naoo.webp",
-    sourceUrl: "https://bitsorchestra.com/case-studies/naoo",
+    image: "/projects/Naoo.webp",
+    sourceUrl: "https://bitsorchestra.com/projects/naoo",
     services: ["Software development", "Mobile app development"],
     industries: [],
     technologies: [".NET Core", "Angular"],
@@ -673,8 +672,8 @@ export const CASE_STUDIES: CaseStudy[] = [
     title: "Custom order management system development for Kustom Printing",
     excerpt:
       "A Progressive Web App for Kustom Printing Products managing printer maintenance and repair orders, working fully offline in low-connectivity locations.",
-    image: "/case-studies/kustom-printing.webp",
-    sourceUrl: "https://bitsorchestra.com/case-studies/kustom-printing",
+    image: "/projects/kustom-printing.webp",
+    sourceUrl: "https://bitsorchestra.com/projects/kustom-printing",
     services: ["Software development"],
     industries: ["Manufacturing"],
     technologies: [".NET Core", "React"],
@@ -701,8 +700,8 @@ export const CASE_STUDIES: CaseStudy[] = [
     title: "Rebuilding an outdoor events platform with partner self-service on Kentico",
     excerpt:
       "TimeOutdoors rebuilt its event platform on Kentico Xperience 13 to enable partner self-service publishing, growing traffic 17% and cutting partner onboarding by 75%.",
-    image: "/case-studies/time-outdoors.webp",
-    sourceUrl: "https://bitsorchestra.com/case-studies/timeoutdoors",
+    image: "/projects/time-outdoors.webp",
+    sourceUrl: "https://bitsorchestra.com/projects/timeoutdoors",
     services: [],
     industries: [],
     technologies: ["Kentico", ".NET Core"],
@@ -731,8 +730,8 @@ export const CASE_STUDIES: CaseStudy[] = [
     title: "UI/UX design for grocery delivery",
     excerpt:
       "UI/UX design for a grocery delivery platform, moving the client from Instagram-only ordering to an automated storefront built on researched user flows.",
-    image: "/case-studies/grocery-delivery.webp",
-    sourceUrl: "https://bitsorchestra.com/case-studies/grocery-delivery",
+    image: "/projects/grocery-delivery.webp",
+    sourceUrl: "https://bitsorchestra.com/projects/grocery-delivery",
     services: ["UI/UX design"],
     industries: [],
     technologies: [],
@@ -758,8 +757,8 @@ export const CASE_STUDIES: CaseStudy[] = [
     title: "UI/UX design for productivity mobile app",
     excerpt:
       "Cross-platform design for a productivity app built on the Getting Things Done method, helping users organize and prioritize tasks.",
-    image: "/case-studies/productivity-app.webp",
-    sourceUrl: "https://bitsorchestra.com/case-studies/productivity-mobile-app",
+    image: "/projects/productivity-app.webp",
+    sourceUrl: "https://bitsorchestra.com/projects/productivity-mobile-app",
     services: ["UI/UX design"],
     industries: [],
     technologies: [],
@@ -782,8 +781,8 @@ export const CASE_STUDIES: CaseStudy[] = [
     title: "Order management system automation",
     excerpt:
       "Automated order processing for Vivad, breaking orders into job items across work centers with QR-based traceability and real-time status for customers.",
-    image: "/case-studies/Vivad.webp",
-    sourceUrl: "https://bitsorchestra.com/case-studies/vivad",
+    image: "/projects/Vivad.webp",
+    sourceUrl: "https://bitsorchestra.com/projects/vivad",
     services: ["Software development"],
     industries: ["Manufacturing"],
     technologies: ["Kentico", ".NET"],
@@ -809,8 +808,8 @@ export const CASE_STUDIES: CaseStudy[] = [
     title: "E-commerce system for auto parts and accessories vendor",
     excerpt:
       "An e-commerce platform for DasParts, a Canadian Volkswagen and Audi parts retailer, integrating inventory management and automated order processing through Kentico.",
-    image: "/case-studies/dasparts.webp",
-    sourceUrl: "https://bitsorchestra.com/case-studies/dasparts",
+    image: "/projects/dasparts.webp",
+    sourceUrl: "https://bitsorchestra.com/projects/dasparts",
     services: [],
     industries: ["Retail & Ecommerce"],
     technologies: ["Kentico", ".NET"],
@@ -836,8 +835,8 @@ export const CASE_STUDIES: CaseStudy[] = [
     title: "SaaS solution development for social media AI platform",
     excerpt:
       "A multi-tenant SaaS platform letting fashion, beauty and jewelry brands analyze social media data and understand consumer preferences through AI.",
-    image: "/case-studies/lavelio.webp",
-    sourceUrl: "https://bitsorchestra.com/case-studies/lavelio",
+    image: "/projects/lavelio.webp",
+    sourceUrl: "https://bitsorchestra.com/projects/lavelio",
     services: ["Software development"],
     industries: [],
     technologies: [".NET Core", "React"],
@@ -863,8 +862,8 @@ export const CASE_STUDIES: CaseStudy[] = [
     title: "Marketplace for builders and subcontractors development",
     excerpt:
       "A construction marketplace letting builders and subcontractors connect, hire and transact digitally while maintaining quality standards through reputation and ratings.",
-    image: "/case-studies/prorank.webp",
-    sourceUrl: "https://bitsorchestra.com/case-studies/prorank",
+    image: "/projects/prorank.webp",
+    sourceUrl: "https://bitsorchestra.com/projects/prorank",
     services: ["Software development"],
     industries: [],
     technologies: [".NET Core", "Angular"],
@@ -890,8 +889,8 @@ export const CASE_STUDIES: CaseStudy[] = [
     title: "E-commerce system for distributors of carpet manufacturer",
     excerpt:
       "Shaw Industries rebuilt its B2B carpet distributor portal on Kentico MVC, modernizing a content-heavy platform and lifting user acquisition and site performance.",
-    image: "/case-studies/shaw-pro.webp",
-    sourceUrl: "https://bitsorchestra.com/case-studies/shaw-pro",
+    image: "/projects/shaw-pro.webp",
+    sourceUrl: "https://bitsorchestra.com/projects/shaw-pro",
     services: [],
     industries: ["Manufacturing"],
     technologies: ["Kentico", ".NET"],
@@ -918,8 +917,8 @@ export const CASE_STUDIES: CaseStudy[] = [
     title: "Ordering system and web app for the flower distributor in Canada",
     excerpt:
       "A B2B ordering platform for Staalduinen Floral, letting customers self-serve browsing, ordering and payment with real-time ERP pricing and inventory.",
-    image: "/case-studies/staalduinen.webp",
-    sourceUrl: "https://bitsorchestra.com/case-studies/staalduinen",
+    image: "/projects/staalduinen.webp",
+    sourceUrl: "https://bitsorchestra.com/projects/staalduinen",
     services: [],
     industries: ["Retail & Ecommerce"],
     technologies: ["Kentico"],
@@ -945,8 +944,8 @@ export const CASE_STUDIES: CaseStudy[] = [
     title: "Inventory and content management system in Kentico MVC",
     excerpt:
       "Digitron Semiconductors modernized its supplier website with a dynamic inventory system on Kentico, growing traffic 136% while letting editors extend the catalog without code.",
-    image: "/case-studies/digitron.webp",
-    sourceUrl: "https://bitsorchestra.com/case-studies/digitron",
+    image: "/projects/digitron.webp",
+    sourceUrl: "https://bitsorchestra.com/projects/digitron",
     services: ["UI/UX design"],
     industries: ["Manufacturing"],
     technologies: ["Kentico"],
@@ -972,8 +971,8 @@ export const CASE_STUDIES: CaseStudy[] = [
     title: "Fitness mobile application and web service",
     excerpt:
       "A fitness club website redesign that strengthened brand representation and simplified the consumer journey, selling over 1,000 new memberships within months.",
-    image: "/case-studies/fitfactory.webp",
-    sourceUrl: "https://bitsorchestra.com/case-studies/fit-factory-clubs",
+    image: "/projects/fitfactory.webp",
+    sourceUrl: "https://bitsorchestra.com/projects/fit-factory-clubs",
     services: ["UI/UX design"],
     industries: [],
     technologies: ["Kentico", ".NET"],
@@ -994,8 +993,8 @@ export const CASE_STUDIES: CaseStudy[] = [
     title: "Digitalization of Total Tech school",
     excerpt:
       "Total Tech School digitalized offline processes through an LMS and e-commerce platform, eliminating manual data entry and enabling online course purchasing.",
-    image: "/case-studies/total-tech-school.webp",
-    sourceUrl: "https://bitsorchestra.com/case-studies/totaltechschool",
+    image: "/projects/total-tech-school.webp",
+    sourceUrl: "https://bitsorchestra.com/projects/totaltechschool",
     services: ["Software development"],
     industries: [],
     technologies: ["Kentico", ".NET Core"],
@@ -1022,8 +1021,8 @@ export const CASE_STUDIES: CaseStudy[] = [
     title: "Transitioning educational system for Hiller",
     excerpt:
       "Transition to Trades' Excel-based management system became an automated web application, removing manual processes and increasing program manager efficiency.",
-    image: "/case-studies/Hiller.webp",
-    sourceUrl: "https://bitsorchestra.com/case-studies/transition-to-trades",
+    image: "/projects/Hiller.webp",
+    sourceUrl: "https://bitsorchestra.com/projects/transition-to-trades",
     services: ["Software development"],
     industries: [],
     technologies: [".NET Core", "Angular"],
@@ -1050,8 +1049,8 @@ export const CASE_STUDIES: CaseStudy[] = [
     title: "Recruitment tool for candidates assessment",
     excerpt:
       "A SaaS recruitment tool letting service companies assess candidate knowledge and identify training gaps — 160 companies subscribed in the first month.",
-    image: "/case-studies/recruitment-tool-for-candidate.webp",
-    sourceUrl: "https://bitsorchestra.com/case-studies/trutech-test",
+    image: "/projects/recruitment-tool-for-candidate.webp",
+    sourceUrl: "https://bitsorchestra.com/projects/trutech-test",
     services: ["Software development"],
     industries: [],
     technologies: [".NET Core", "React"],
@@ -1079,8 +1078,8 @@ export const CASE_STUDIES: CaseStudy[] = [
     title: "Navigation software for the college students",
     excerpt:
       "A virtual campus tour platform letting prospective students explore a coastal college remotely through 360° panoramas and interactive hotspots.",
-    image: "/case-studies/navigation-software.webp",
-    sourceUrl: "https://bitsorchestra.com/case-studies/college-navigator",
+    image: "/projects/navigation-software.webp",
+    sourceUrl: "https://bitsorchestra.com/projects/college-navigator",
     services: ["Software development"],
     industries: ["Education"],
     technologies: ["React", "Typescript"],
@@ -1107,8 +1106,8 @@ export const CASE_STUDIES: CaseStudy[] = [
     title: "Software application development for a mortgage company",
     excerpt:
       "A React-powered mortgage comparison tool with real-time calculations and side-by-side product comparison, integrated with an existing mobile app.",
-    image: "/case-studies/mortgage.webp",
-    sourceUrl: "https://bitsorchestra.com/case-studies/notification-center",
+    image: "/projects/mortgage.webp",
+    sourceUrl: "https://bitsorchestra.com/projects/notification-center",
     services: ["Software development"],
     industries: [],
     technologies: ["React"],
@@ -1134,8 +1133,8 @@ export const CASE_STUDIES: CaseStudy[] = [
     title: "Cargo tracking automation software for Cargo Bee",
     excerpt:
       "Automated cargo tracking and driver dispatch that replaced email-and-phone load management, growing load capacity tenfold without extra administrators.",
-    image: "/case-studies/cargo-bee-(driver-dispatch).webp",
-    sourceUrl: "https://bitsorchestra.com/case-studies/driver-dispatch",
+    image: "/projects/cargo-bee-(driver-dispatch).webp",
+    sourceUrl: "https://bitsorchestra.com/projects/driver-dispatch",
     services: ["Software development", "Mobile app development"],
     industries: [],
     technologies: ["Firebase", "React Native"],
@@ -1159,8 +1158,8 @@ export const CASE_STUDIES: CaseStudy[] = [
     title: "Office visualization quote tool for furniture company",
     excerpt:
       "An office visualization and quoting tool letting furniture sales reps generate custom workspace proposals with space visualization and pricing in minutes.",
-    image: "/case-studies/office-visualization-quote.webp",
-    sourceUrl: "https://bitsorchestra.com/case-studies/workplace-budget-tool",
+    image: "/projects/office-visualization-quote.webp",
+    sourceUrl: "https://bitsorchestra.com/projects/workplace-budget-tool",
     services: ["Software development"],
     industries: [],
     technologies: ["React"],
@@ -1185,8 +1184,8 @@ export const CASE_STUDIES: CaseStudy[] = [
     title: "Kentico MVC platform integration for ecommerce website of rug manufacturer",
     excerpt:
       "Philadelphia Commercial migrated from Kentico Portal Engine to Kentico MVC, modernizing the e-commerce platform with cleaner markup and stronger engagement.",
-    image: "/case-studies/philadelphia.webp",
-    sourceUrl: "https://bitsorchestra.com/case-studies/philadelphia-commercial",
+    image: "/projects/philadelphia.webp",
+    sourceUrl: "https://bitsorchestra.com/projects/philadelphia-commercial",
     services: [],
     industries: [],
     technologies: ["Kentico"],
@@ -1213,8 +1212,8 @@ export const CASE_STUDIES: CaseStudy[] = [
     title: "Mortgage quote tool development for financial institution",
     excerpt:
       "A mobile-first mortgage calculator enabling quick loan estimates for customers and loan officers, with automated manager notifications on every request.",
-    image: "/case-studies/mortgage.webp",
-    sourceUrl: "https://bitsorchestra.com/case-studies/mortgage-calculator",
+    image: "/projects/mortgage.webp",
+    sourceUrl: "https://bitsorchestra.com/projects/mortgage-calculator",
     services: ["Software development"],
     industries: [],
     technologies: ["React"],
@@ -1238,8 +1237,8 @@ export const CASE_STUDIES: CaseStudy[] = [
     title: "Digital transformation of Eurobank Cyprus",
     excerpt:
       "Eurobank Cyprus redesigned its banking website on Kentico, adding financial calculators and a compliance-ready, load-balanced infrastructure.",
-    image: "/case-studies/eurobank-cyprus.webp",
-    sourceUrl: "https://bitsorchestra.com/case-studies/eurobank-cyprus",
+    image: "/projects/eurobank-cyprus.webp",
+    sourceUrl: "https://bitsorchestra.com/projects/eurobank-cyprus",
     services: ["AI/ML"],
     industries: [],
     technologies: ["Kentico", ".NET"],
@@ -1264,8 +1263,8 @@ export const CASE_STUDIES: CaseStudy[] = [
     title: "Career Growth Tracker — TruTech",
     excerpt:
       "A career development tracking SaaS replacing spreadsheets with centralized data for technician advancement, cutting supervisor effort by 40%.",
-    image: "/case-studies/career-growth-tracker-trutech.webp",
-    sourceUrl: "https://bitsorchestra.com/case-studies/trutech-tracker",
+    image: "/projects/career-growth-tracker-trutech.webp",
+    sourceUrl: "https://bitsorchestra.com/projects/trutech-tracker",
     services: ["Software development"],
     industries: [],
     technologies: [".NET Core", "React"],
@@ -1290,8 +1289,8 @@ export const CASE_STUDIES: CaseStudy[] = [
     title: "Content and user management system for PJ Library",
     excerpt:
       "A content and user management system letting the PJ Library program distribute free books to Jewish families in Ukraine, with automated mailing workflows.",
-    image: "/case-studies/pj-library.webp",
-    sourceUrl: "https://bitsorchestra.com/case-studies/pj-library-ua",
+    image: "/projects/pj-library.webp",
+    sourceUrl: "https://bitsorchestra.com/projects/pj-library-ua",
     services: ["Web development"],
     industries: [],
     technologies: ["Kentico", ".NET"],
@@ -1316,8 +1315,8 @@ export const CASE_STUDIES: CaseStudy[] = [
     title: "Vet pharma budgeting tool",
     excerpt:
       "A sales pricing tool letting veterinary pharmaceutical managers calculate competitive prices and process orders across complex medical component dependencies.",
-    image: "/case-studies/vet-pharma-budgeting-tool.webp",
-    sourceUrl: "https://bitsorchestra.com/case-studies/vet-pharma-sales-tool",
+    image: "/projects/vet-pharma-budgeting-tool.webp",
+    sourceUrl: "https://bitsorchestra.com/projects/vet-pharma-sales-tool",
     services: ["Software development"],
     industries: [],
     technologies: ["Angular"],
@@ -1340,8 +1339,8 @@ export const CASE_STUDIES: CaseStudy[] = [
     title: "Custom tour booking system for an Australian recycling facility",
     excerpt:
       "An Australian recycling facility replaced phone and email tour bookings with an online self-service module on Kentico, processing 500+ bookings in six months.",
-    image: "/case-studies/tour-booking-system.webp",
-    sourceUrl: "https://bitsorchestra.com/case-studies/tour-booking-module",
+    image: "/projects/tour-booking-system.webp",
+    sourceUrl: "https://bitsorchestra.com/projects/tour-booking-module",
     services: ["Web development", "UI/UX design"],
     industries: [],
     technologies: ["Kentico", ".NET"],
@@ -1369,8 +1368,8 @@ export const CASE_STUDIES: CaseStudy[] = [
     title: "Sales pricing catalogue for residential and repair company",
     excerpt:
       "A mobile-friendly sales catalog letting field managers prepare filtered product offers, working offline in low-connectivity locations.",
-    image: "/case-studies/sales-pricing-catalogue.webp",
-    sourceUrl: "https://bitsorchestra.com/case-studies/sales-price-book",
+    image: "/projects/sales-pricing-catalogue.webp",
+    sourceUrl: "https://bitsorchestra.com/projects/sales-price-book",
     services: ["Software development"],
     industries: [],
     technologies: ["Angular", "ASP.NET MVC"],
@@ -1395,8 +1394,8 @@ export const CASE_STUDIES: CaseStudy[] = [
     title: "Employee directory software for manufacturing company",
     excerpt:
       "A web application reflecting an entire company org structure of 20,000+ employees, with type-ahead search, in-app contact and a facilities directory.",
-    image: "/case-studies/employee-directory-software.webp",
-    sourceUrl: "https://bitsorchestra.com/case-studies/org-chart",
+    image: "/projects/employee-directory-software.webp",
+    sourceUrl: "https://bitsorchestra.com/projects/org-chart",
     services: [],
     industries: [],
     technologies: ["Kentico", ".NET"],
@@ -1421,8 +1420,8 @@ export const CASE_STUDIES: CaseStudy[] = [
     title: "Website builder templated solution for enterprise manufacturing client",
     excerpt:
       "An enterprise site builder letting a dealer network manage many promotional websites from one platform while keeping brand consistency across locations.",
-    image: "/case-studies/website-builder-templated-solution.webp",
-    sourceUrl: "https://bitsorchestra.com/case-studies/site-builder",
+    image: "/projects/website-builder-templated-solution.webp",
+    sourceUrl: "https://bitsorchestra.com/projects/site-builder",
     services: [],
     industries: [],
     technologies: ["Kentico", ".NET"],
@@ -1447,8 +1446,8 @@ export const CASE_STUDIES: CaseStudy[] = [
     title: "Custom rug builder for manufacturer from USA",
     excerpt:
       "A custom rug configurator letting users design personalized area rugs with dynamic pricing, lifting custom rug sales by 37%.",
-    image: "/case-studies/custom-rug-builder.webp",
-    sourceUrl: "https://bitsorchestra.com/case-studies/rug-calculator",
+    image: "/projects/custom-rug-builder.webp",
+    sourceUrl: "https://bitsorchestra.com/projects/rug-calculator",
     services: ["Software development"],
     industries: [],
     technologies: ["Angular", "ASP.NET MVC"],
@@ -1471,8 +1470,8 @@ export const CASE_STUDIES: CaseStudy[] = [
     title: "Current Choice: online marketplace for electricity suppliers",
     excerpt:
       "An online marketplace letting consumers compare electricity suppliers and switch plans through bill-to-bill analysis and real-time consumption data.",
-    image: "/case-studies/current-choice-online-marketplace.webp",
-    sourceUrl: "https://bitsorchestra.com/case-studies/current-choice",
+    image: "/projects/current-choice-online-marketplace.webp",
+    sourceUrl: "https://bitsorchestra.com/projects/current-choice",
     services: ["Software development", "Mobile app development"],
     industries: [],
     technologies: ["Kentico", "ASP.NET MVC"],
@@ -1496,9 +1495,9 @@ export const CASE_STUDIES: CaseStudy[] = [
 /** Keeps the canonical source-site ordering, dropping options nothing is tagged with. */
 function usedOptions(
   canonical: readonly string[],
-  pick: (study: CaseStudy) => string[],
+  pick: (study: Project) => string[],
 ): readonly string[] {
-  const used = new Set(CASE_STUDIES.flatMap(pick));
+  const used = new Set(PROJECTS.flatMap(pick));
   return canonical.filter((option) => used.has(option));
 }
 
@@ -1506,6 +1505,6 @@ export const SERVICES = usedOptions(ALL_SERVICES, (c) => c.services);
 export const INDUSTRIES = usedOptions(ALL_INDUSTRIES, (c) => c.industries);
 export const TECHNOLOGIES = usedOptions(ALL_TECHNOLOGIES, (c) => c.technologies);
 
-export function getCaseStudy(slug: string) {
-  return CASE_STUDIES.find((c) => c.slug === slug);
+export function getProject(slug: string) {
+  return PROJECTS.find((c) => c.slug === slug);
 }

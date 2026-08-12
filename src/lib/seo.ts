@@ -9,9 +9,10 @@ export const SITE_URL = (
   import.meta.env["VITE_SITE_URL"] ?? "https://syncopate-showcase.lovable.app"
 ).replace(/\/$/, "");
 
-export const SITE_NAME = "Bits Orchestra";
+export const SITE_NAME = "Dylan Lee";
+export const SITE_TAGLINE = "Full-Stack Developer — Web, Mobile & AI Automation";
 
-/** Resolves an app-relative path (`/case-studies/foo.webp`) to an absolute URL. */
+/** Resolves an app-relative path (`/projects/foo.webp`) to an absolute URL. */
 export function absoluteUrl(path: string) {
   if (/^https?:\/\//.test(path)) return path;
   return `${SITE_URL}${path.startsWith("/") ? path : `/${path}`}`;

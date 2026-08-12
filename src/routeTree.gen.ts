@@ -10,65 +10,85 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as CaseStudiesRouteImport } from './routes/case-studies'
 import { Route as CaseStudiesIndexRouteImport } from './routes/case-studies.index'
-import { Route as CaseStudiesSlugRouteImport } from './routes/case-studies.$slug'
+import { Route as CaseStudiesSplatRouteImport } from './routes/case-studies.$'
+import { Route as ProjectsIndexRouteImport } from './routes/projects.index'
+import { Route as ProjectsSlugRouteImport } from './routes/projects.$slug'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const CaseStudiesRoute = CaseStudiesRouteImport.update({
-  id: '/case-studies',
-  path: '/case-studies',
+const CaseStudiesIndexRoute = CaseStudiesIndexRouteImport.update({
+  id: '/case-studies/',
+  path: '/case-studies/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const CaseStudiesIndexRoute = CaseStudiesIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => CaseStudiesRoute,
+const CaseStudiesSplatRoute = CaseStudiesSplatRouteImport.update({
+  id: '/case-studies/$',
+  path: '/case-studies/$',
+  getParentRoute: () => rootRouteImport,
 } as any)
-const CaseStudiesSlugRoute = CaseStudiesSlugRouteImport.update({
-  id: '/$slug',
-  path: '/$slug',
-  getParentRoute: () => CaseStudiesRoute,
+const ProjectsIndexRoute = ProjectsIndexRouteImport.update({
+  id: '/projects/',
+  path: '/projects/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProjectsSlugRoute = ProjectsSlugRouteImport.update({
+  id: '/projects/$slug',
+  path: '/projects/$slug',
+  getParentRoute: () => rootRouteImport,
 } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/case-studies': typeof CaseStudiesRouteWithChildren
-  '/case-studies/$slug': typeof CaseStudiesSlugRoute
+  '/case-studies/$': typeof CaseStudiesSplatRoute
+  '/projects/$slug': typeof ProjectsSlugRoute
   '/case-studies/': typeof CaseStudiesIndexRoute
+  '/projects/': typeof ProjectsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/case-studies/$slug': typeof CaseStudiesSlugRoute
+  '/case-studies/$': typeof CaseStudiesSplatRoute
+  '/projects/$slug': typeof ProjectsSlugRoute
   '/case-studies': typeof CaseStudiesIndexRoute
+  '/projects': typeof ProjectsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/case-studies': typeof CaseStudiesRouteWithChildren
-  '/case-studies/$slug': typeof CaseStudiesSlugRoute
+  '/case-studies/$': typeof CaseStudiesSplatRoute
+  '/projects/$slug': typeof ProjectsSlugRoute
   '/case-studies/': typeof CaseStudiesIndexRoute
+  '/projects/': typeof ProjectsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/case-studies' | '/case-studies/$slug' | '/case-studies/'
+  fullPaths:
+    | '/'
+    | '/case-studies/$'
+    | '/projects/$slug'
+    | '/case-studies/'
+    | '/projects/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/case-studies/$slug' | '/case-studies'
+  to:
+    '/' | '/case-studies/$' | '/projects/$slug' | '/case-studies' | '/projects'
   id:
     | '__root__'
     | '/'
-    | '/case-studies'
-    | '/case-studies/$slug'
+    | '/case-studies/$'
+    | '/projects/$slug'
     | '/case-studies/'
+    | '/projects/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  CaseStudiesRoute: typeof CaseStudiesRouteWithChildren
+  CaseStudiesSplatRoute: typeof CaseStudiesSplatRoute
+  ProjectsSlugRoute: typeof ProjectsSlugRoute
+  CaseStudiesIndexRoute: typeof CaseStudiesIndexRoute
+  ProjectsIndexRoute: typeof ProjectsIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -80,47 +100,43 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/case-studies': {
-      id: '/case-studies'
-      path: '/case-studies'
-      fullPath: '/case-studies'
-      preLoaderRoute: typeof CaseStudiesRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/case-studies/': {
       id: '/case-studies/'
-      path: '/'
+      path: '/case-studies'
       fullPath: '/case-studies/'
       preLoaderRoute: typeof CaseStudiesIndexRouteImport
-      parentRoute: typeof CaseStudiesRoute
+      parentRoute: typeof rootRouteImport
     }
-    '/case-studies/$slug': {
-      id: '/case-studies/$slug'
-      path: '/$slug'
-      fullPath: '/case-studies/$slug'
-      preLoaderRoute: typeof CaseStudiesSlugRouteImport
-      parentRoute: typeof CaseStudiesRoute
+    '/case-studies/$': {
+      id: '/case-studies/$'
+      path: '/case-studies/$'
+      fullPath: '/case-studies/$'
+      preLoaderRoute: typeof CaseStudiesSplatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/projects/': {
+      id: '/projects/'
+      path: '/projects'
+      fullPath: '/projects/'
+      preLoaderRoute: typeof ProjectsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/projects/$slug': {
+      id: '/projects/$slug'
+      path: '/projects/$slug'
+      fullPath: '/projects/$slug'
+      preLoaderRoute: typeof ProjectsSlugRouteImport
+      parentRoute: typeof rootRouteImport
     }
   }
 }
 
-interface CaseStudiesRouteChildren {
-  CaseStudiesSlugRoute: typeof CaseStudiesSlugRoute
-  CaseStudiesIndexRoute: typeof CaseStudiesIndexRoute
-}
-
-const CaseStudiesRouteChildren: CaseStudiesRouteChildren = {
-  CaseStudiesSlugRoute: CaseStudiesSlugRoute,
-  CaseStudiesIndexRoute: CaseStudiesIndexRoute,
-}
-
-const CaseStudiesRouteWithChildren = CaseStudiesRoute._addFileChildren(
-  CaseStudiesRouteChildren,
-)
-
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  CaseStudiesRoute: CaseStudiesRouteWithChildren,
+  CaseStudiesSplatRoute: CaseStudiesSplatRoute,
+  ProjectsSlugRoute: ProjectsSlugRoute,
+  CaseStudiesIndexRoute: CaseStudiesIndexRoute,
+  ProjectsIndexRoute: ProjectsIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
