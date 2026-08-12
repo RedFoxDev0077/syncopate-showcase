@@ -3,7 +3,7 @@
 Portfolio site for **Dylan Lee**, full-stack developer (Web, Mobile & AI Automation), built to be
 attached to freelance proposals.
 
-**Live app**: https://syncopate-showcase.lovable.app
+**Live site**: https://goodmandylanlee.com
 
 ## Pages
 
@@ -76,7 +76,8 @@ Stack: React 19 · TanStack Start (SSR, file-based routing) · Vite · Tailwind 
 Routing conventions are documented in [src/routes/README.md](src/routes/README.md).
 `src/routeTree.gen.ts` is generated — don't edit it.
 
-Set `VITE_SITE_URL` to the deployed origin so canonical URLs and `og:image` resolve correctly.
+Canonical URLs, hreflang and `og:image` resolve against `VITE_SITE_URL`, which falls back to
+https://goodmandylanlee.com. Override it per environment (e.g. a preview deploy) if needed.
 
 ## Notes
 

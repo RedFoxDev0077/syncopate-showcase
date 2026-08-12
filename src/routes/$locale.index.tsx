@@ -1,5 +1,6 @@
 import { Link, createFileRoute } from "@tanstack/react-router";
 import { ArrowRight, Quote, Star } from "lucide-react";
+import type { CSSProperties } from "react";
 import { JsonLd } from "@/components/JsonLd";
 import { Reveal } from "@/components/Reveal";
 import { PROFILE, REVIEW_SUMMARY, TESTIMONIALS } from "@/data/profile";
@@ -8,7 +9,15 @@ import { DEFAULT_LOCALE, isLocale, type Locale } from "@/i18n/config";
 import { PROFILE_I18N, TESTIMONIAL_PROJECTS } from "@/i18n/content";
 import { localizeProject } from "@/i18n/projects";
 import { t } from "@/i18n/ui";
-import { SITE_NAME, SITE_TAGLINE, alternateLinks, localeUrl } from "@/lib/seo";
+import { SITE_NAME, SITE_TAGLINE, absoluteUrl, alternateLinks, localeUrl } from "@/lib/seo";
+import heroBackdrop from "@/assets/hero-network.jpg";
+
+/** Offsets for the angled screenshot stack in the hero. */
+const HERO_STACK: CSSProperties[] = [
+  { top: 0, right: 0, width: "82%", rotate: "3deg", animationDelay: "260ms" },
+  { top: "30%", left: 0, width: "76%", rotate: "-4deg", animationDelay: "380ms" },
+  { bottom: 0, right: "8%", width: "70%", rotate: "2deg", animationDelay: "500ms" },
+];
 
 export const Route = createFileRoute("/$locale/")({
   head: ({ params }) => {
@@ -25,7 +34,9 @@ export const Route = createFileRoute("/$locale/")({
         { property: "og:type", content: "profile" },
         { property: "og:url", content: canonical },
         { property: "og:locale", content: locale },
+        { property: "og:image", content: absoluteUrl(heroBackdrop) },
         { name: "twitter:card", content: "summary_large_image" },
+        { name: "twitter:image", content: absoluteUrl(heroBackdrop) },
       ],
       links: [{ rel: "canonical", href: canonical }, ...alternateLinks()],
     };
@@ -56,60 +67,96 @@ function PortfolioHome() {
       />
 
       {/* Hero — who I am, kept short; no contact details anywhere on this site. */}
-      <section className="bg-ink text-ink-foreground">
-        <div className="mx-auto max-w-6xl px-6 py-20 sm:py-28">
-          <p className="animate-enter inline-flex items-center gap-2 rounded-full border border-ink-foreground/20 px-3 py-1 text-xs font-medium text-ink-foreground/80">
-            <span className="size-1.5 rounded-full bg-primary" />
-            {profile.availability}
-          </p>
+      <section className="relative isolate overflow-hidden bg-ink text-ink-foreground">
+        {/* Decorative backdrop. Empty alt + aria-hidden: it carries no meaning. */}
+        <img
+          src={heroBackdrop}
+          alt=""
+          aria-hidden="true"
+          fetchPriority="high"
+          className="pointer-events-none absolute inset-0 -z-10 size-full object-cover opacity-40"
+        />
+        {/* Scrim so the headline keeps its contrast over the artwork. */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-r from-ink via-ink/90 to-ink/40"
+        />
 
-          <h1
-            className="animate-enter mt-6 max-w-4xl text-4xl font-bold leading-tight tracking-tight sm:text-5xl"
-            style={{ animationDelay: "80ms" }}
-          >
-            {PROFILE.name}
-            <span className="mt-2 block text-primary">{profile.headline}</span>
-          </h1>
-
-          <p
-            className="animate-enter mt-6 max-w-3xl text-lg leading-relaxed text-ink-foreground/80"
-            style={{ animationDelay: "160ms" }}
-          >
-            {profile.intro}
-          </p>
-
-          <dl
-            className="animate-enter mt-10 flex flex-wrap gap-x-12 gap-y-6"
-            style={{ animationDelay: "240ms" }}
-          >
-            {PROFILE.stats.map((stat, i) => (
-              <div key={stat.label}>
-                <dt className="sr-only">{profile.statLabels[i]}</dt>
-                <dd>
-                  <span className="block text-3xl font-bold text-primary">{stat.value}</span>
-                  <span className="mt-1 block text-sm text-ink-foreground/60">
-                    {profile.statLabels[i]}
-                  </span>
-                </dd>
-              </div>
-            ))}
-          </dl>
-
-          <div
-            className="animate-enter mt-10 flex flex-wrap items-center gap-4"
-            style={{ animationDelay: "320ms" }}
-          >
-            <Link
-              to="/$locale/projects"
-              params={{ locale }}
-              className="inline-flex items-center gap-2 rounded-md bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground transition-opacity hover:opacity-90"
-            >
-              {s.viewAllProjects(PROJECTS.length)}
-              <ArrowRight className="size-4" />
-            </Link>
-            <p className="text-sm text-ink-foreground/60">
-              {profile.location} · {profile.rateSuffix} · {profile.languages}
+        <div className="mx-auto grid max-w-6xl items-center gap-14 px-6 py-20 sm:py-28 lg:grid-cols-[1fr_400px]">
+          <div>
+            <p className="animate-enter inline-flex items-center gap-2 rounded-full border border-ink-foreground/20 px-3 py-1 text-xs font-medium text-ink-foreground/80">
+              <span className="size-1.5 rounded-full bg-primary" />
+              {profile.availability}
             </p>
+
+            <h1
+              className="animate-enter mt-6 max-w-4xl text-4xl font-bold leading-tight tracking-tight sm:text-5xl"
+              style={{ animationDelay: "80ms" }}
+            >
+              {PROFILE.name}
+              <span className="mt-2 block text-primary">{profile.headline}</span>
+            </h1>
+
+            <p
+              className="animate-enter mt-6 max-w-3xl text-lg leading-relaxed text-ink-foreground/80"
+              style={{ animationDelay: "160ms" }}
+            >
+              {profile.intro}
+            </p>
+
+            <dl
+              className="animate-enter mt-10 flex flex-wrap gap-x-12 gap-y-6"
+              style={{ animationDelay: "240ms" }}
+            >
+              {PROFILE.stats.map((stat, i) => (
+                <div key={stat.label}>
+                  <dt className="sr-only">{profile.statLabels[i]}</dt>
+                  <dd>
+                    <span className="block text-3xl font-bold text-primary">{stat.value}</span>
+                    <span className="mt-1 block text-sm text-ink-foreground/60">
+                      {profile.statLabels[i]}
+                    </span>
+                  </dd>
+                </div>
+              ))}
+            </dl>
+
+            <div
+              className="animate-enter mt-10 flex flex-wrap items-center gap-4"
+              style={{ animationDelay: "320ms" }}
+            >
+              <Link
+                to="/$locale/projects"
+                params={{ locale }}
+                className="inline-flex items-center gap-2 rounded-md bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground transition-opacity hover:opacity-90"
+              >
+                {s.viewAllProjects(PROJECTS.length)}
+                <ArrowRight className="size-4" />
+              </Link>
+              <p className="text-sm text-ink-foreground/60">
+                {profile.location} · {profile.rateSuffix} · {profile.languages}
+              </p>
+            </div>
+          </div>
+
+          {/*
+            Real screenshots from the projects below, stacked at an angle. Kept
+            out of the DOM on small screens rather than shrunk — at phone widths
+            the layering reads as clutter.
+          */}
+          <div aria-hidden="true" className="relative hidden h-[420px] lg:block">
+            {featured.map((project, i) => (
+              <img
+                key={project.slug}
+                src={project.image}
+                alt=""
+                loading="eager"
+                width={640}
+                height={400}
+                className="animate-enter absolute rounded-xl border border-ink-foreground/15 object-cover shadow-2xl"
+                style={HERO_STACK[i]}
+              />
+            ))}
           </div>
         </div>
       </section>

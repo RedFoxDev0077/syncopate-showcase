@@ -7,9 +7,10 @@
  */
 import { DEFAULT_LOCALE, LOCALES, LOCALE_TAGS, type Locale } from "@/i18n/config";
 
-export const SITE_URL = (
-  import.meta.env["VITE_SITE_URL"] ?? "https://syncopate-showcase.lovable.app"
-).replace(/\/$/, "");
+export const SITE_URL = (import.meta.env["VITE_SITE_URL"] ?? "https://goodmandylanlee.com").replace(
+  /\/$/,
+  "",
+);
 
 export const SITE_NAME = "Dylan Lee";
 export const SITE_TAGLINE = "Full-Stack Developer — Web, Mobile & AI Automation";
