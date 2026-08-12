@@ -1,6 +1,8 @@
 import { Link, createFileRoute, notFound } from "@tanstack/react-router";
-import { ArrowLeft } from "lucide-react";
-import { CASE_STUDIES, getCaseStudy, type CaseStudy } from "@/data/case-studies";
+import { ArrowLeft, ExternalLink } from "lucide-react";
+import { JsonLd } from "@/components/JsonLd";
+import { CASE_STUDIES, getCaseStudy } from "@/data/case-studies";
+import { SITE_NAME, absoluteUrl } from "@/lib/seo";
 
 export const Route = createFileRoute("/case-studies/$slug")({
   loader: ({ params }) => {
@@ -15,7 +17,10 @@ export const Route = createFileRoute("/case-studies/$slug")({
       };
     }
     const { study } = loaderData;
-    const title = `${study.title} — Bits Orchestra`;
+    const title = `${study.title} — ${SITE_NAME}`;
+    const canonical = absoluteUrl(`/case-studies/${study.slug}`);
+    // og:image must be absolute — scrapers do not resolve relative paths.
+    const image = absoluteUrl(study.image);
     return {
       meta: [
         { title },
@@ -23,10 +28,12 @@ export const Route = createFileRoute("/case-studies/$slug")({
         { property: "og:title", content: title },
         { property: "og:description", content: study.excerpt },
         { property: "og:type", content: "article" },
-        { property: "og:image", content: study.image },
+        { property: "og:url", content: canonical },
+        { property: "og:image", content: image },
         { name: "twitter:card", content: "summary_large_image" },
-        { name: "twitter:image", content: study.image },
+        { name: "twitter:image", content: image },
       ],
+      links: [{ rel: "canonical", href: canonical }],
     };
   },
   notFoundComponent: CaseStudyNotFound,
@@ -46,11 +53,36 @@ function CaseStudyNotFound() {
 }
 
 function CaseStudyDetail() {
-  const { study } = Route.useLoaderData() as { study: CaseStudy };
-  const others = CASE_STUDIES.filter((c) => c.slug !== study.slug).slice(0, 2);
+  const { study } = Route.useLoaderData();
+  const tags = [...study.services, ...study.industries, ...study.technologies];
+
+  // Prefer studies that share a tag; top up with the newest ones if there aren't enough.
+  const related = CASE_STUDIES.filter(
+    (c) =>
+      c.slug !== study.slug &&
+      [...c.services, ...c.industries, ...c.technologies].some((t) => tags.includes(t)),
+  );
+  const others = [
+    ...related,
+    ...CASE_STUDIES.filter((c) => c.slug !== study.slug && !related.includes(c)),
+  ].slice(0, 2);
 
   return (
     <main>
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@type": "Article",
+          headline: study.title,
+          description: study.excerpt,
+          image: absoluteUrl(study.image),
+          url: absoluteUrl(`/case-studies/${study.slug}`),
+          about: tags,
+          isBasedOn: study.sourceUrl,
+          publisher: { "@type": "Organization", name: SITE_NAME },
+        }}
+      />
+
       <section className="bg-ink text-ink-foreground">
         <div className="mx-auto max-w-6xl px-6 py-14">
           <Link
@@ -64,7 +96,7 @@ function CaseStudyDetail() {
           </h1>
           <p className="mt-4 max-w-2xl text-ink-foreground/75">{study.excerpt}</p>
           <div className="mt-6 flex flex-wrap gap-2">
-            {[...study.services, ...study.industries, ...study.technologies].map((tag) => (
+            {tags.map((tag) => (
               <span
                 key={tag}
                 className="rounded-full bg-primary px-3 py-1 text-xs font-medium text-primary-foreground"
@@ -103,36 +135,75 @@ function CaseStudyDetail() {
               ))}
             </ul>
 
-            <h2 className="mt-10 text-2xl font-semibold">Results</h2>
-            <div className="mt-4 grid gap-4 sm:grid-cols-3">
-              {study.results.map((r) => (
-                <div key={r.label} className="rounded-xl border border-border bg-muted p-5">
-                  <p className="text-2xl font-bold text-primary">{r.value}</p>
-                  <p className="mt-1 text-sm text-muted-foreground">{r.label}</p>
-                </div>
-              ))}
-            </div>
+            {(study.results.length > 0 || study.outcomes.length > 0) && (
+              <>
+                <h2 className="mt-10 text-2xl font-semibold">Results</h2>
+                {study.results.length > 0 && (
+                  <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+                    {study.results.map((r) => (
+                      <div key={r.label} className="rounded-xl border border-border bg-muted p-5">
+                        <p className="text-2xl font-bold text-primary">{r.value}</p>
+                        <p className="mt-1 text-sm text-muted-foreground">{r.label}</p>
+                      </div>
+                    ))}
+                  </div>
+                )}
+                {study.outcomes.length > 0 && (
+                  <ul className="mt-4 space-y-3">
+                    {study.outcomes.map((item) => (
+                      <li key={item} className="flex gap-3 text-muted-foreground">
+                        <span className="mt-2 size-1.5 shrink-0 rounded-full bg-primary" />
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </>
+            )}
           </div>
 
           <aside className="h-fit rounded-2xl border border-border bg-muted p-6 text-sm">
             <dl className="space-y-4">
-              <div>
-                <dt className="text-muted-foreground">Client</dt>
-                <dd className="mt-1 font-medium">{study.client}</dd>
-              </div>
-              <div>
-                <dt className="text-muted-foreground">Duration</dt>
-                <dd className="mt-1 font-medium">{study.duration}</dd>
-              </div>
-              <div>
-                <dt className="text-muted-foreground">Services</dt>
-                <dd className="mt-1 font-medium">{study.services.join(", ")}</dd>
-              </div>
-              <div>
-                <dt className="text-muted-foreground">Technologies</dt>
-                <dd className="mt-1 font-medium">{study.technologies.join(", ")}</dd>
-              </div>
+              {study.client && (
+                <div>
+                  <dt className="text-muted-foreground">Client</dt>
+                  <dd className="mt-1 font-medium">{study.client}</dd>
+                </div>
+              )}
+              {study.duration && (
+                <div>
+                  <dt className="text-muted-foreground">Duration</dt>
+                  <dd className="mt-1 font-medium">{study.duration}</dd>
+                </div>
+              )}
+              {study.services.length > 0 && (
+                <div>
+                  <dt className="text-muted-foreground">Services</dt>
+                  <dd className="mt-1 font-medium">{study.services.join(", ")}</dd>
+                </div>
+              )}
+              {study.industries.length > 0 && (
+                <div>
+                  <dt className="text-muted-foreground">Industry</dt>
+                  <dd className="mt-1 font-medium">{study.industries.join(", ")}</dd>
+                </div>
+              )}
+              {study.technologies.length > 0 && (
+                <div>
+                  <dt className="text-muted-foreground">Technologies</dt>
+                  <dd className="mt-1 font-medium">{study.technologies.join(", ")}</dd>
+                </div>
+              )}
             </dl>
+            <a
+              href={study.sourceUrl}
+              target="_blank"
+              rel="noreferrer noopener"
+              className="mt-6 inline-flex items-center gap-1.5 font-medium text-primary hover:underline"
+            >
+              Read on bitsorchestra.com
+              <ExternalLink className="size-3.5" />
+            </a>
           </aside>
         </div>
 
