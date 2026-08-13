@@ -4,6 +4,7 @@ import { FilterSelect } from "@/components/projects/FilterSelect";
 import { PaginationNav } from "@/components/projects/PaginationNav";
 import { JsonLd } from "@/components/JsonLd";
 import { Reveal } from "@/components/Reveal";
+import { TechIcon, techSlug } from "@/components/TechIcon";
 import { TiltCard } from "@/components/TiltCard";
 import { INDUSTRIES, PROJECTS, SERVICES, TECHNOLOGIES } from "@/data/projects";
 import { DEFAULT_LOCALE, isLocale, type Locale } from "@/i18n/config";
@@ -149,11 +150,11 @@ function ProjectsIndexPage() {
         }}
       />
 
-      <p className="eyebrow">{s.projectsTitle}</p>
-      <h1 className="mt-5 font-display text-5xl font-bold leading-[1.05] sm:text-6xl">
+      <p className="eyebrow">{s.secWork}</p>
+      <h1 className="mt-6 text-6xl leading-[1.02]">
         <span className="text-gradient">{s.projectsTitle}</span>
       </h1>
-      <p className="mt-6 max-w-3xl text-lg text-foreground/55">{s.projectsIntro}</p>
+      <p className="mt-7 max-w-3xl text-lg text-foreground/60">{s.projectsIntro}</p>
 
       <div className="mt-12 grid gap-4 md:grid-cols-3">
         <FilterSelect
@@ -202,7 +203,7 @@ function ProjectsIndexPage() {
 
       <div className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
         {visible.map((project, i) => (
-          <Reveal as="article" key={project.slug} delay={i * 60}>
+          <Reveal as="article" key={project.slug} delay={(i % 3) * 90}>
             <TiltCard className="h-full" max={6}>
               <Link
                 to="/$locale/projects/$slug"
@@ -230,8 +231,11 @@ function ProjectsIndexPage() {
                       .map((v) => (
                         <span
                           key={v}
-                          className="rounded-full border border-white/12 bg-white/5 px-3 py-1 font-mono text-[0.7rem] tracking-wide text-foreground/60"
+                          className="inline-flex items-center gap-1.5 rounded-full border border-white/12 bg-white/5 px-3 py-1 font-mono text-xs tracking-wide text-foreground/60"
                         >
+                          {/* Only badge values that have a real brand mark —
+                              a generic glyph on every service reads as noise. */}
+                          {techSlug(v) && <TechIcon label={v} className="size-3.5" />}
                           {tag(locale, v)}
                         </span>
                       ))}

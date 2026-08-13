@@ -1,3 +1,4 @@
+import { Bot, Cloud, Braces, Workflow, Zap, type LucideIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 /**
@@ -30,7 +31,23 @@ const SLUGS: Record<string, string> = {
   ".NET Core": "dotnet",
   Firebase: "firebase",
   AWS: "amazonwebservices",
-  Azure: "googlecloud",
+  Kentico: "kentico",
+  Umbraco: "umbraco",
+  "ASP.NET MVC": "dotnet",
+  Typescript: "typescript",
+  Shopify: "shopify",
+};
+
+/**
+ * Capabilities and a few platforms have no brand mark — Azure's was pulled from
+ * simple-icons over trademark. A meaningful glyph beats an empty slot.
+ */
+const GLYPHS: Record<string, LucideIcon> = {
+  Azure: Cloud,
+  "AI Agents": Bot,
+  "LLM Integrations": Braces,
+  "API Automation": Zap,
+  "Business Workflows": Workflow,
 };
 
 export function techSlug(label: string) {
@@ -45,12 +62,8 @@ export function TechIcon({ label, className }: { label: string; className?: stri
   const slug = SLUGS[label];
 
   if (!slug) {
-    return (
-      <span
-        aria-hidden="true"
-        className={cn("inline-block size-2 rounded-full bg-current opacity-50", className)}
-      />
-    );
+    const Glyph = GLYPHS[label] ?? Zap;
+    return <Glyph aria-hidden="true" className={cn("inline-block size-5", className)} />;
   }
 
   return (

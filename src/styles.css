@@ -23,27 +23,27 @@
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
 
   /* Type scale — deliberately larger than Tailwind's defaults. */
-  --text-xs: 0.8125rem;
+  --text-xs: 0.875rem;
   --text-xs--line-height: 1.5;
-  --text-sm: 0.9375rem;
+  --text-sm: 1rem;
   --text-sm--line-height: 1.6;
-  --text-base: 1.0625rem;
+  --text-base: 1.125rem;
   --text-base--line-height: 1.7;
-  --text-lg: 1.1875rem;
+  --text-lg: 1.3125rem;
   --text-lg--line-height: 1.7;
-  --text-xl: 1.375rem;
+  --text-xl: 1.5rem;
   --text-xl--line-height: 1.55;
-  --text-2xl: 1.75rem;
+  --text-2xl: 1.875rem;
   --text-2xl--line-height: 1.35;
-  --text-3xl: 2.25rem;
+  --text-3xl: 2.5rem;
   --text-3xl--line-height: 1.2;
-  --text-4xl: 3rem;
+  --text-4xl: 3.25rem;
   --text-4xl--line-height: 1.12;
-  --text-5xl: 3.75rem;
+  --text-5xl: 4rem;
   --text-5xl--line-height: 1.05;
-  --text-6xl: 4.5rem;
+  --text-6xl: 5rem;
   --text-6xl--line-height: 1;
-  --text-7xl: 5.5rem;
+  --text-7xl: 6rem;
   --text-7xl--line-height: 0.98;
 
   --radius-sm: calc(var(--radius) - 4px);
@@ -231,7 +231,24 @@
   h3,
   h4 {
     font-family: var(--font-display);
-    letter-spacing: -0.022em;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+  }
+
+  h3,
+  h4 {
+    font-weight: 600;
+    letter-spacing: -0.018em;
+  }
+
+  /* Light text on a dark ground looks thinner than it measures. */
+  body {
+    font-weight: 380;
+  }
+
+  strong,
+  b {
+    font-weight: 600;
   }
 
   ::selection {
@@ -312,12 +329,22 @@
 
   /* Small uppercase label, monospaced — reads as engineering, not marketing. */
   .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
     font-family: var(--font-mono);
-    font-size: 0.75rem;
+    font-size: 0.8125rem;
     font-weight: 500;
-    letter-spacing: 0.16em;
+    letter-spacing: 0.2em;
     text-transform: uppercase;
-    color: var(--color-muted-foreground);
+    color: oklch(0.78 0.19 142);
+  }
+  /* Leading rule, so the label anchors to the section edge. */
+  .eyebrow::before {
+    content: "";
+    width: 2.25rem;
+    height: 1px;
+    background: linear-gradient(to right, oklch(0.78 0.19 142), transparent);
   }
 
   /* ---------- backdrops ---------- */
@@ -400,6 +427,123 @@
   }
   .tilt-sheen:hover::after {
     opacity: 1;
+  }
+
+  /* ---------- living surfaces ---------- */
+
+  /*
+   * Rotating conic border. The gradient spins behind a masked ring, so the
+   * edge of the panel reads as energised rather than static.
+   */
+  @property --spin {
+    syntax: "<angle>";
+    inherits: false;
+    initial-value: 0deg;
+  }
+
+  .ring-spin {
+    position: relative;
+  }
+  .ring-spin::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1.5px;
+    background: conic-gradient(
+      from var(--spin),
+      transparent 0deg,
+      oklch(0.78 0.19 142 / 0.9) 40deg,
+      oklch(0.72 0.14 195 / 0.7) 80deg,
+      transparent 140deg,
+      transparent 360deg
+    );
+    -webkit-mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    mask-composite: exclude;
+    animation: spin-border 6s linear infinite;
+    pointer-events: none;
+  }
+
+  @keyframes spin-border {
+    to {
+      --spin: 360deg;
+    }
+  }
+
+  /* Slow breathing glow — the page never sits completely still. */
+  @keyframes breathe {
+    0%,
+    100% {
+      opacity: 0.55;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 0.9;
+      transform: scale(1.06);
+    }
+  }
+  .animate-breathe {
+    animation: breathe 6s ease-in-out infinite;
+  }
+
+  /* AR-style scan sweep across a panel. */
+  @keyframes scan {
+    0% {
+      transform: translateY(-120%);
+    }
+    100% {
+      transform: translateY(320%);
+    }
+  }
+  .scanline::after {
+    content: "";
+    position: absolute;
+    inset-inline: 0;
+    height: 28%;
+    background: linear-gradient(to bottom, transparent, oklch(0.78 0.19 142 / 0.14), transparent);
+    animation: scan 5.5s ease-in-out infinite;
+    pointer-events: none;
+  }
+
+  /* Counter-rotating orbit rings for the hero core. */
+  @keyframes orbit {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  .animate-orbit {
+    animation: orbit 34s linear infinite;
+  }
+  .animate-orbit-reverse {
+    animation: orbit 46s linear infinite reverse;
+  }
+  /* Keeps a chip upright while its parent ring rotates. */
+  .orbit-upright {
+    animation: orbit 34s linear infinite reverse;
+  }
+
+  /* ---------- unique shapes ---------- */
+
+  /* Notched corner — a card that isn't just another rounded rectangle. */
+  .clip-notch {
+    clip-path: polygon(0 0, calc(100% - 34px) 0, 100% 34px, 100% 100%, 0 100%);
+  }
+  .clip-notch-tl {
+    clip-path: polygon(34px 0, 100% 0, 100% 100%, 0 100%, 0 34px);
+  }
+
+  /* Squircle-ish: heavier radius on one diagonal. */
+  .rounded-leaf {
+    border-radius: 44px 12px 44px 12px;
+  }
+  .rounded-blob {
+    border-radius: 42% 58% 46% 54% / 52% 44% 56% 48%;
   }
 
   /* ---------- motion ---------- */

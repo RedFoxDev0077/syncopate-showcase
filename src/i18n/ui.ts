@@ -10,6 +10,17 @@ export type UiStrings = {
   homeLink: string;
   languageLabel: string;
 
+  /* Short section labels. Deliberately different from the heading they sit
+     above — repeating the same words twice reads as a mistake. */
+  secProfile: string;
+  secCapabilities: string;
+  secStack: string;
+  secWork: string;
+  secReviews: string;
+  scrollHint: string;
+  viewProject: string;
+  featured: string;
+
   // Home
   viewAllProjects: (count: number) => string;
   aboutMe: string;
@@ -74,6 +85,15 @@ const en: UiStrings = {
   homeLink: "home",
   languageLabel: "Language",
 
+  secProfile: "Profile",
+  secCapabilities: "Capabilities",
+  secStack: "Toolkit",
+  secWork: "Case files",
+  secReviews: "Signals",
+  scrollHint: "Scroll",
+  viewProject: "View project",
+  featured: "Featured",
+
   viewAllProjects: (count) => `View all ${count} projects`,
   aboutMe: "About me",
   whatIShip: "What I ship",
@@ -134,6 +154,15 @@ const es: UiStrings = {
   homeLink: "inicio",
   languageLabel: "Idioma",
 
+  secProfile: "Perfil",
+  secCapabilities: "Capacidades",
+  secStack: "Herramientas",
+  secWork: "Casos",
+  secReviews: "Señales",
+  scrollHint: "Desliza",
+  viewProject: "Ver proyecto",
+  featured: "Destacado",
+
   viewAllProjects: (count) => `Ver los ${count} proyectos`,
   aboutMe: "Sobre mí",
   whatIShip: "Lo que entrego",
@@ -193,6 +222,15 @@ const pt: UiStrings = {
   navProjects: "Projetos",
   homeLink: "início",
   languageLabel: "Idioma",
+
+  secProfile: "Perfil",
+  secCapabilities: "Capacidades",
+  secStack: "Ferramentas",
+  secWork: "Casos",
+  secReviews: "Sinais",
+  scrollHint: "Role",
+  viewProject: "Ver projeto",
+  featured: "Destaque",
 
   viewAllProjects: (count) => `Ver todos os ${count} projetos`,
   aboutMe: "Sobre mim",

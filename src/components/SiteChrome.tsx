@@ -40,25 +40,35 @@ function LanguageSwitcher({ locale }: { locale: Locale }) {
   const params = useParams({ strict: false }) as { slug?: string };
   const onProjectsList = /^\/[^/]+\/projects\/?$/.test(pathname);
 
+  // Circular flags rather than text codes: recognisable at a glance and the
+  // same width in every language, so the header never reflows.
   const linkClass = (code: Locale) =>
     cn(
-      "rounded-full px-2.5 py-1 font-mono text-xs font-medium tracking-wide transition-all duration-300",
+      "block rounded-full transition-all duration-300 hover:scale-110",
       code === locale
-        ? "bg-primary text-primary-foreground shadow-[0_0_18px_-4px_oklch(0.78_0.19_142/0.7)]"
-        : "text-foreground/55 hover:bg-white/5 hover:text-foreground",
+        ? "ring-2 ring-primary ring-offset-2 ring-offset-background/40 shadow-[0_0_16px_-2px_oklch(0.78_0.19_142/0.8)]"
+        : "opacity-45 grayscale hover:opacity-90 hover:grayscale-0",
     );
 
   return (
-    <div className="glass flex items-center gap-1 rounded-full px-1.5 py-1">
-      <Globe aria-hidden className="ml-1 size-3.5 text-foreground/55" />
+    <div className="glass flex items-center gap-2.5 rounded-full px-3 py-2">
       <span className="sr-only">{t(locale).languageLabel}</span>
       {LOCALES.map((code) => {
         const shared = {
           hrefLang: code,
           title: LOCALE_LABELS[code],
+          "aria-label": LOCALE_LABELS[code],
           "aria-current": code === locale ? ("true" as const) : undefined,
           className: linkClass(code),
-          children: LOCALE_SHORT[code],
+          children: (
+            <img
+              src={`/flags/${code}.svg`}
+              alt=""
+              width={26}
+              height={26}
+              className="size-[26px] rounded-full"
+            />
+          ),
         };
 
         // `to` has to be a literal route path, so pick the matching route and
