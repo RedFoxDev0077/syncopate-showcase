@@ -15,7 +15,11 @@ import { PROFILE_I18N, TESTIMONIAL_PROJECTS } from "@/i18n/content";
 import { localizeProject } from "@/i18n/projects";
 import { t } from "@/i18n/ui";
 import { SITE_NAME, SITE_TAGLINE, absoluteUrl, alternateLinks, localeUrl } from "@/lib/seo";
-import heroBackdrop from "@/assets/hero-network.jpg";
+
+/* Real photography rather than abstract renders: developers actually working,
+   which is what the page is about. Each sits under a heavy scrim — a busy
+   photo needs far more separation from text than a flat gradient does. */
+const HERO_IMAGE = "/img/hero-devs.jpg";
 
 export const Route = createFileRoute("/$locale/")({
   head: ({ params }) => {
@@ -32,9 +36,9 @@ export const Route = createFileRoute("/$locale/")({
         { property: "og:type", content: "profile" },
         { property: "og:url", content: canonical },
         { property: "og:locale", content: locale },
-        { property: "og:image", content: absoluteUrl(heroBackdrop) },
+        { property: "og:image", content: absoluteUrl(HERO_IMAGE) },
         { name: "twitter:card", content: "summary_large_image" },
-        { name: "twitter:image", content: absoluteUrl(heroBackdrop) },
+        { name: "twitter:image", content: absoluteUrl(HERO_IMAGE) },
       ],
       links: [{ rel: "canonical", href: canonical }, ...alternateLinks()],
     };
@@ -70,13 +74,18 @@ function PortfolioHome() {
       <section className="relative -mt-28 flex min-h-svh items-center overflow-hidden pt-28">
         <div aria-hidden className="absolute inset-0 -z-30 bg-ink" />
         <img
-          src={heroBackdrop}
+          src={HERO_IMAGE}
           alt=""
           aria-hidden="true"
           fetchPriority="high"
-          className="pointer-events-none absolute inset-0 -z-20 size-full object-cover opacity-20"
+          className="pointer-events-none absolute inset-0 -z-20 size-full object-cover opacity-35"
         />
-        <div aria-hidden className="aurora -z-20" />
+        {/* Left-weighted scrim keeps the headline fully legible over the photo. */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 -z-20 bg-gradient-to-r from-ink via-ink/92 to-ink/45"
+        />
+        <div aria-hidden className="aurora -z-20 opacity-70" />
         <HeroCanvas className="pointer-events-none absolute inset-0 -z-10 size-full opacity-60" />
         <div
           aria-hidden
@@ -188,8 +197,19 @@ function PortfolioHome() {
       </section>
 
       {/* ---------------- about ---------------- */}
-      <section className="mx-auto max-w-7xl px-6 py-28 lg:px-10">
-        <div className="grid gap-16 lg:grid-cols-[1.15fr_minmax(0,380px)]">
+      <section className="relative overflow-hidden py-28">
+        <img
+          src="/img/work-desk.jpg"
+          alt=""
+          aria-hidden="true"
+          loading="lazy"
+          className="pointer-events-none absolute inset-0 -z-20 size-full object-cover opacity-[0.07]"
+        />
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-b from-background via-background/90 to-background"
+        />
+        <div className="relative mx-auto grid max-w-7xl gap-16 px-6 lg:grid-cols-[1.15fr_minmax(0,380px)] lg:px-10">
           <Reveal>
             <p className="eyebrow">{s.secProfile}</p>
             <h2 className="mt-6 max-w-3xl text-4xl leading-[1.15]">{profile.bio[0]}</h2>
@@ -265,7 +285,18 @@ function PortfolioHome() {
 
       {/* ---------------- toolkit ---------------- */}
       <section className="relative overflow-hidden py-28">
-        <div aria-hidden className="grid-lines opacity-70" />
+        <img
+          src="/img/team-working.jpg"
+          alt=""
+          aria-hidden="true"
+          loading="lazy"
+          className="pointer-events-none absolute inset-0 -z-20 size-full object-cover opacity-[0.09]"
+        />
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-b from-background via-background/88 to-background"
+        />
+        <div aria-hidden className="grid-lines opacity-40" />
         <div className="relative mx-auto max-w-7xl px-6 lg:px-10">
           <Reveal>
             <p className="eyebrow">{s.secStack}</p>
@@ -386,11 +417,11 @@ function PortfolioHome() {
       {/* ---------------- testimonials ---------------- */}
       <section className="relative overflow-hidden py-28">
         <img
-          src="/img/grid-dark.jpg"
+          src="/img/client-talk.jpg"
           alt=""
           aria-hidden="true"
           loading="lazy"
-          className="pointer-events-none absolute inset-0 -z-20 size-full object-cover opacity-15"
+          className="pointer-events-none absolute inset-0 -z-20 size-full object-cover opacity-[0.13]"
         />
         <div
           aria-hidden
