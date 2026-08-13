@@ -146,8 +146,13 @@ function RootComponent() {
     <QueryClientProvider client={queryClient}>
       <div className="flex min-h-screen flex-col bg-background">
         <SiteHeader />
-        {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-        <div className="flex-1">
+        {/*
+          The header is fixed, so content is padded down to clear it. The hero
+          cancels this with -mt-28 to let its backdrop run behind the header.
+          Required: nested routes render here — removing <Outlet /> breaks all
+          child routes.
+        */}
+        <div className="flex-1 pt-28">
           <Outlet />
         </div>
         <SiteFooter />

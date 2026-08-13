@@ -30,14 +30,14 @@ function pageItems(page: number, pageCount: number): (number | null)[] {
 }
 
 const base =
-  "inline-flex h-9 min-w-9 items-center justify-center rounded-md px-3 text-sm font-medium transition-colors";
+  "inline-flex h-11 min-w-11 items-center justify-center rounded-full px-4 font-mono text-sm transition-all duration-300";
 
 export function PaginationNav({ locale, page, pageCount, toPage }: Props) {
   if (pageCount <= 1) return null;
   const s = t(locale);
 
   return (
-    <nav aria-label={s.pagination} className="mt-14 flex justify-center">
+    <nav aria-label={s.pagination} className="mt-20 flex justify-center">
       <ul className="flex flex-wrap items-center gap-1">
         <li>
           {page > 1 ? (
@@ -47,13 +47,13 @@ export function PaginationNav({ locale, page, pageCount, toPage }: Props) {
               search={toPage(page - 1)}
               resetScroll={false}
               aria-label={s.goToPrevious}
-              className={cn(base, "gap-1 pl-2 hover:bg-accent hover:text-accent-foreground")}
+              className={cn(base, "glass gap-1.5 pl-3 hover:text-primary")}
             >
               <ChevronLeft className="size-4" />
               {s.previous}
             </Link>
           ) : (
-            <span aria-disabled className={cn(base, "gap-1 pl-2 text-muted-foreground/50")}>
+            <span aria-disabled className={cn(base, "gap-1.5 pl-3 text-foreground/40")}>
               <ChevronLeft className="size-4" />
               {s.previous}
             </span>
@@ -77,8 +77,8 @@ export function PaginationNav({ locale, page, pageCount, toPage }: Props) {
                 className={cn(
                   base,
                   item === page
-                    ? "bg-primary text-primary-foreground"
-                    : "hover:bg-accent hover:text-accent-foreground",
+                    ? "bg-primary text-primary-foreground shadow-[var(--shadow-glow)]"
+                    : "glass hover:text-primary",
                 )}
               >
                 {item}
@@ -95,13 +95,13 @@ export function PaginationNav({ locale, page, pageCount, toPage }: Props) {
               search={toPage(page + 1)}
               resetScroll={false}
               aria-label={s.goToNext}
-              className={cn(base, "gap-1 pr-2 hover:bg-accent hover:text-accent-foreground")}
+              className={cn(base, "glass gap-1.5 pr-3 hover:text-primary")}
             >
               {s.next}
               <ChevronRight className="size-4" />
             </Link>
           ) : (
-            <span aria-disabled className={cn(base, "gap-1 pr-2 text-muted-foreground/50")}>
+            <span aria-disabled className={cn(base, "gap-1.5 pr-3 text-foreground/40")}>
               {s.next}
               <ChevronRight className="size-4" />
             </span>

@@ -25,8 +25,8 @@ export function FilterSelect({ locale, label, options, selected, onToggle }: Pro
             : s.noFilterSelected(label)
         }
         className={cn(
-          "flex w-full items-center justify-between rounded-md border border-border bg-muted px-4 py-3 text-left text-sm transition-colors hover:border-primary/60",
-          selected.length ? "text-foreground" : "text-muted-foreground",
+          "glass flex w-full items-center justify-between rounded-2xl px-5 py-4 text-left transition-all duration-300 hover:border-primary/40",
+          selected.length ? "text-foreground" : "text-foreground/50",
         )}
       >
         <span className="truncate">
@@ -37,7 +37,7 @@ export function FilterSelect({ locale, label, options, selected, onToggle }: Pro
       </PopoverTrigger>
       <PopoverContent
         align="start"
-        className="max-h-72 w-(--radix-popover-trigger-width) overflow-auto p-1"
+        className="glass max-h-80 w-(--radix-popover-trigger-width) overflow-auto rounded-2xl border-0 p-2"
       >
         {/* Multi-select: selection state has to be exposed, not just coloured. */}
         <div role="listbox" aria-multiselectable aria-label={label}>
@@ -51,7 +51,7 @@ export function FilterSelect({ locale, label, options, selected, onToggle }: Pro
                 aria-selected={active}
                 onClick={() => onToggle(option)}
                 className={cn(
-                  "flex w-full items-center justify-between rounded-sm px-3 py-2 text-left text-sm transition-colors hover:bg-accent",
+                  "flex w-full items-center justify-between rounded-xl px-3.5 py-2.5 text-left text-sm transition-colors hover:bg-white/10",
                   active && "font-medium text-primary",
                 )}
               >

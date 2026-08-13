@@ -4,6 +4,7 @@ import { FilterSelect } from "@/components/projects/FilterSelect";
 import { PaginationNav } from "@/components/projects/PaginationNav";
 import { JsonLd } from "@/components/JsonLd";
 import { Reveal } from "@/components/Reveal";
+import { TiltCard } from "@/components/TiltCard";
 import { INDUSTRIES, PROJECTS, SERVICES, TECHNOLOGIES } from "@/data/projects";
 import { DEFAULT_LOCALE, isLocale, type Locale } from "@/i18n/config";
 import { tag } from "@/i18n/content";
@@ -126,7 +127,7 @@ function ProjectsIndexPage() {
   });
 
   return (
-    <main className="mx-auto max-w-6xl px-6 py-14">
+    <main className="relative mx-auto max-w-7xl px-6 py-16 lg:px-10">
       <JsonLd
         data={{
           "@context": "https://schema.org",
@@ -148,10 +149,13 @@ function ProjectsIndexPage() {
         }}
       />
 
-      <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">{s.projectsTitle}</h1>
-      <p className="mt-3 max-w-2xl text-muted-foreground">{s.projectsIntro}</p>
+      <p className="eyebrow">{s.projectsTitle}</p>
+      <h1 className="mt-5 font-display text-5xl font-bold leading-[1.05] sm:text-6xl">
+        <span className="text-gradient">{s.projectsTitle}</span>
+      </h1>
+      <p className="mt-6 max-w-3xl text-lg text-foreground/55">{s.projectsIntro}</p>
 
-      <div className="mt-10 grid gap-4 md:grid-cols-3">
+      <div className="mt-12 grid gap-4 md:grid-cols-3">
         <FilterSelect
           locale={locale}
           label={s.filterServices}
@@ -175,13 +179,11 @@ function ProjectsIndexPage() {
         />
       </div>
 
-      <div className="mt-8 flex items-center justify-between">
-        <h2 className="text-lg font-semibold" aria-live="polite">
-          {s.result}: {filtered.length}
+      <div className="mt-10 flex flex-wrap items-center justify-between gap-4 border-b border-white/10 pb-5">
+        <h2 className="font-mono text-sm tracking-wider text-foreground/60" aria-live="polite">
+          <span className="text-primary">{s.result}</span> — {filtered.length}
           {pageCount > 1 && (
-            <span className="ml-2 text-sm font-normal text-muted-foreground">
-              ({s.pageOf(currentPage, pageCount)})
-            </span>
+            <span className="ml-2 text-foreground/50">({s.pageOf(currentPage, pageCount)})</span>
           )}
         </h2>
         {hasFilters && (
@@ -191,54 +193,59 @@ function ProjectsIndexPage() {
             search={{}}
             replace
             resetScroll={false}
-            className="text-sm font-medium text-primary hover:underline"
+            className="glass rounded-full px-4 py-2 font-mono text-xs tracking-wider text-primary transition-colors hover:bg-primary/10"
           >
             {s.clearAll}
           </Link>
         )}
       </div>
 
-      <div className="mt-8 grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
         {visible.map((project, i) => (
-          <Reveal as="article" key={project.slug} delay={i * 60} className="group card-lift">
-            <Link
-              to="/$locale/projects/$slug"
-              params={{ locale, slug: project.slug }}
-              className="block"
-            >
-              <div
-                className="overflow-hidden rounded-2xl p-4 shadow-[var(--shadow-card)]"
-                style={{ backgroundImage: "var(--gradient-primary)" }}
+          <Reveal as="article" key={project.slug} delay={i * 60}>
+            <TiltCard className="h-full" max={6}>
+              <Link
+                to="/$locale/projects/$slug"
+                params={{ locale, slug: project.slug }}
+                className="glass ring-gradient group flex h-full flex-col overflow-hidden rounded-3xl"
               >
-                <img
-                  src={project.image}
-                  alt={project.title}
-                  loading="lazy"
-                  width={640}
-                  height={400}
-                  className="aspect-[16/10] w-full rounded-xl object-cover transition-transform duration-500 group-hover:scale-[1.02]"
-                />
-              </div>
-              <h3 className="mt-5 text-lg font-semibold leading-snug transition-colors group-hover:text-primary">
-                {project.title}
-              </h3>
-            </Link>
-            <p className="mt-2 text-sm text-muted-foreground">{project.excerpt}</p>
-            <div className="mt-4 flex flex-wrap gap-2">
-              {[...project.services, ...project.industries, ...project.technologies].map((v) => (
-                <span
-                  key={v}
-                  className="rounded-full bg-primary px-3 py-1 text-xs font-medium text-primary-foreground"
-                >
-                  {tag(locale, v)}
-                </span>
-              ))}
-            </div>
+                <div className="overflow-hidden">
+                  <img
+                    src={project.image}
+                    alt={project.title}
+                    loading="lazy"
+                    width={640}
+                    height={400}
+                    className="aspect-[16/10] w-full object-cover transition-transform duration-700 group-hover:scale-[1.06]"
+                  />
+                </div>
+                <div className="flex flex-1 flex-col p-7">
+                  <h3 className="font-display text-xl font-semibold leading-snug transition-colors group-hover:text-primary">
+                    {project.title}
+                  </h3>
+                  <p className="mt-3 flex-1 text-foreground/55">{project.excerpt}</p>
+                  <div className="mt-6 flex flex-wrap gap-2">
+                    {[...project.services, ...project.industries, ...project.technologies]
+                      .slice(0, 4)
+                      .map((v) => (
+                        <span
+                          key={v}
+                          className="rounded-full border border-white/12 bg-white/5 px-3 py-1 font-mono text-[0.7rem] tracking-wide text-foreground/60"
+                        >
+                          {tag(locale, v)}
+                        </span>
+                      ))}
+                  </div>
+                </div>
+              </Link>
+            </TiltCard>
           </Reveal>
         ))}
       </div>
 
-      {!filtered.length && <p className="py-16 text-center text-muted-foreground">{s.noMatches}</p>}
+      {!filtered.length && (
+        <p className="py-24 text-center text-lg text-foreground/60">{s.noMatches}</p>
+      )}
 
       <PaginationNav locale={locale} page={currentPage} pageCount={pageCount} toPage={toPage} />
     </main>

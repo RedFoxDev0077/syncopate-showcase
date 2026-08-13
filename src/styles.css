@@ -1,42 +1,72 @@
 @import "tailwindcss" source(none);
 @source "../src";
 @import "tw-animate-css";
+@import "./fonts.css";
 
 @custom-variant dark (&:is(.dark *));
 
 /*
- * Design system definition.
+ * Design system.
  *
- * The @theme inline block maps CSS custom properties to Tailwind utility
- * classes (e.g. --color-primary -> bg-primary, text-primary).
+ * Dark-first: the base surfaces are near-black with a green accent, which is
+ * where the brand sits and what the photography and glass surfaces are tuned
+ * for. `.light` inverts it for anyone who wires up a toggle.
  *
- * The :root and .dark blocks define the actual color values using oklch.
- * All colors MUST use oklch format.
- *
- * To add a new semantic color:
- * 1. Add the variable to :root (light value) and .dark (dark value)
- * 2. Register it in @theme inline as --color-<name>: var(--<name>)
+ * The type scale below overrides Tailwind's defaults, so `text-base`,
+ * `text-2xl` and friends are all a step larger than stock across the whole
+ * site rather than being resized class by class.
  */
 
 @theme inline {
+  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-display: "Sora", "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  /* Type scale — deliberately larger than Tailwind's defaults. */
+  --text-xs: 0.8125rem;
+  --text-xs--line-height: 1.5;
+  --text-sm: 0.9375rem;
+  --text-sm--line-height: 1.6;
+  --text-base: 1.0625rem;
+  --text-base--line-height: 1.7;
+  --text-lg: 1.1875rem;
+  --text-lg--line-height: 1.7;
+  --text-xl: 1.375rem;
+  --text-xl--line-height: 1.55;
+  --text-2xl: 1.75rem;
+  --text-2xl--line-height: 1.35;
+  --text-3xl: 2.25rem;
+  --text-3xl--line-height: 1.2;
+  --text-4xl: 3rem;
+  --text-4xl--line-height: 1.12;
+  --text-5xl: 3.75rem;
+  --text-5xl--line-height: 1.05;
+  --text-6xl: 4.5rem;
+  --text-6xl--line-height: 1;
+  --text-7xl: 5.5rem;
+  --text-7xl--line-height: 0.98;
+
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
-  --radius-2xl: calc(var(--radius) + 8px);
-  --radius-3xl: calc(var(--radius) + 12px);
-  --radius-4xl: calc(var(--radius) + 16px);
+  --radius-2xl: calc(var(--radius) + 10px);
+  --radius-3xl: calc(var(--radius) + 18px);
+  --radius-4xl: calc(var(--radius) + 26px);
+
   --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
   --color-ink: var(--ink);
   --color-ink-foreground: var(--ink-foreground);
-
-  --color-foreground: var(--foreground);
   --color-card: var(--card);
   --color-card-foreground: var(--card-foreground);
   --color-popover: var(--popover);
   --color-popover-foreground: var(--popover-foreground);
   --color-primary: var(--primary);
   --color-primary-foreground: var(--primary-foreground);
+  --color-accent-2: var(--accent-2);
   --color-secondary: var(--secondary);
   --color-secondary-foreground: var(--secondary-foreground);
   --color-muted: var(--muted);
@@ -48,7 +78,6 @@
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
-  --color-ring-offset-background: var(--background);
   --color-chart-1: var(--chart-1);
   --color-chart-2: var(--chart-2);
   --color-chart-3: var(--chart-3);
@@ -65,89 +94,117 @@
 }
 
 :root {
-  --radius: 0.5rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.19 0.02 150);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.19 0.02 150);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.19 0.02 150);
-  --primary: oklch(0.72 0.19 135);
+  --radius: 0.75rem;
+
+  /* Base surfaces: near-black with a faint green cast. */
+  --background: oklch(0.16 0.014 155);
+  --foreground: oklch(0.97 0.006 150);
+  --surface: oklch(0.2 0.016 155);
+  --surface-2: oklch(0.24 0.018 155);
+
+  --card: oklch(0.2 0.016 155);
+  --card-foreground: oklch(0.97 0.006 150);
+  --popover: oklch(0.21 0.017 155);
+  --popover-foreground: oklch(0.97 0.006 150);
+
+  --primary: oklch(0.78 0.19 142);
   --primary-foreground: oklch(0.16 0.03 150);
-  --secondary: oklch(0.96 0.01 150);
-  --secondary-foreground: oklch(0.22 0.03 150);
-  --muted: oklch(0.97 0.005 150);
-  --muted-foreground: oklch(0.52 0.02 150);
-  --accent: oklch(0.95 0.04 140);
-  --accent-foreground: oklch(0.22 0.05 145);
-  --destructive: oklch(0.577 0.245 27.325);
-  --destructive-foreground: oklch(0.984 0.003 247.858);
-  --border: oklch(0.91 0.008 150);
-  --input: oklch(0.91 0.008 150);
-  --ring: oklch(0.72 0.19 135);
-  --ink: oklch(0.17 0.02 150);
-  --ink-foreground: oklch(0.98 0.01 150);
-  --gradient-primary: linear-gradient(135deg, oklch(0.78 0.19 138) 0%, oklch(0.65 0.17 142) 100%);
-  --shadow-card: 0 12px 32px -18px oklch(0.3 0.05 150 / 0.35);
-  --shadow-glow: 0 10px 30px -12px oklch(0.72 0.19 135 / 0.55);
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
-  --sidebar: oklch(0.984 0.003 247.858);
-  --sidebar-foreground: oklch(0.129 0.042 264.695);
-  --sidebar-primary: oklch(0.208 0.042 265.755);
-  --sidebar-primary-foreground: oklch(0.984 0.003 247.858);
-  --sidebar-accent: oklch(0.968 0.007 247.896);
-  --sidebar-accent-foreground: oklch(0.208 0.042 265.755);
-  --sidebar-border: oklch(0.929 0.013 255.508);
-  --sidebar-ring: oklch(0.704 0.04 256.788);
+  /* Secondary accent for gradients — a cooler teal that reads as depth. */
+  --accent-2: oklch(0.72 0.14 195);
+
+  --secondary: oklch(0.26 0.018 155);
+  --secondary-foreground: oklch(0.97 0.006 150);
+  --muted: oklch(0.23 0.016 155);
+  --muted-foreground: oklch(0.73 0.02 150);
+  --accent: oklch(0.28 0.04 150);
+  --accent-foreground: oklch(0.96 0.02 150);
+
+  --destructive: oklch(0.65 0.2 25);
+  --destructive-foreground: oklch(0.98 0.01 150);
+
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 14%);
+  --ring: oklch(0.78 0.19 142);
+
+  /* "Ink" panels are darker than the page, used for the hero and footer. */
+  --ink: oklch(0.12 0.014 155);
+  --ink-foreground: oklch(0.97 0.006 150);
+
+  --gradient-primary: linear-gradient(135deg, oklch(0.78 0.19 142) 0%, oklch(0.66 0.15 178) 100%);
+  --gradient-text: linear-gradient(
+    100deg,
+    oklch(0.99 0.005 150) 0%,
+    oklch(0.88 0.09 150) 45%,
+    oklch(0.78 0.19 142) 100%
+  );
+
+  /* Layered elevation — several soft shadows read more real than one hard one. */
+  --shadow-card:
+    0 1px 2px oklch(0 0 0 / 0.4), 0 8px 24px -8px oklch(0 0 0 / 0.5),
+    0 24px 48px -24px oklch(0 0 0 / 0.6);
+  --shadow-float:
+    0 2px 4px oklch(0 0 0 / 0.4), 0 16px 40px -12px oklch(0 0 0 / 0.55),
+    0 48px 80px -32px oklch(0 0 0 / 0.65);
+  --shadow-glow:
+    0 0 0 1px oklch(0.78 0.19 142 / 0.25), 0 12px 48px -12px oklch(0.78 0.19 142 / 0.4);
+
+  --glass-bg: oklch(0.22 0.016 155 / 0.6);
+  --glass-border: oklch(1 0 0 / 0.12);
+
+  --chart-1: oklch(0.78 0.19 142);
+  --chart-2: oklch(0.72 0.14 195);
+  --chart-3: oklch(0.8 0.15 90);
+  --chart-4: oklch(0.7 0.16 300);
+  --chart-5: oklch(0.75 0.17 40);
+
+  --sidebar: oklch(0.2 0.016 155);
+  --sidebar-foreground: oklch(0.97 0.006 150);
+  --sidebar-primary: oklch(0.78 0.19 142);
+  --sidebar-primary-foreground: oklch(0.16 0.03 150);
+  --sidebar-accent: oklch(0.26 0.018 155);
+  --sidebar-accent-foreground: oklch(0.97 0.006 150);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.78 0.19 142);
 }
 
-/*
- * Dark theme. Every token defined in :root must also be defined here —
- * including --ink, --ink-foreground, --gradient-primary and --shadow-card,
- * which the header, footer and case study cards depend on.
- */
-.dark {
-  --background: oklch(0.16 0.015 150);
-  --foreground: oklch(0.97 0.01 150);
-  --card: oklch(0.2 0.02 150);
-  --card-foreground: oklch(0.97 0.01 150);
-  --popover: oklch(0.2 0.02 150);
-  --popover-foreground: oklch(0.97 0.01 150);
-  --primary: oklch(0.75 0.18 135);
-  --primary-foreground: oklch(0.16 0.03 150);
-  --secondary: oklch(0.26 0.02 150);
-  --secondary-foreground: oklch(0.97 0.01 150);
-  --muted: oklch(0.23 0.02 150);
-  --muted-foreground: oklch(0.72 0.02 150);
-  --accent: oklch(0.28 0.04 145);
-  --accent-foreground: oklch(0.95 0.02 150);
-  --destructive: oklch(0.704 0.191 22.216);
-  --destructive-foreground: oklch(0.984 0.003 247.858);
-  --border: oklch(1 0 0 / 12%);
-  --input: oklch(1 0 0 / 18%);
-  --ring: oklch(0.75 0.18 135);
-  --ink: oklch(0.13 0.02 150);
-  --ink-foreground: oklch(0.97 0.01 150);
-  --gradient-primary: linear-gradient(135deg, oklch(0.7 0.18 138) 0%, oklch(0.55 0.15 142) 100%);
-  --shadow-card: 0 12px 32px -18px oklch(0 0 0 / 0.7);
-  --shadow-glow: 0 10px 30px -12px oklch(0.75 0.18 135 / 0.45);
-  --chart-1: oklch(0.488 0.243 264.376);
-  --chart-2: oklch(0.696 0.17 162.48);
-  --chart-3: oklch(0.769 0.188 70.08);
-  --chart-4: oklch(0.627 0.265 303.9);
-  --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.208 0.042 265.755);
-  --sidebar-foreground: oklch(0.984 0.003 247.858);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.984 0.003 247.858);
-  --sidebar-accent: oklch(0.279 0.041 260.031);
-  --sidebar-accent-foreground: oklch(0.984 0.003 247.858);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.551 0.027 264.364);
+/* Light variant, kept complete so a toggle can be wired up without gaps. */
+.light {
+  --background: oklch(0.99 0.003 150);
+  --foreground: oklch(0.18 0.02 155);
+  --surface: oklch(1 0 0);
+  --surface-2: oklch(0.97 0.005 150);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.18 0.02 155);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.18 0.02 155);
+  --primary: oklch(0.62 0.17 142);
+  --primary-foreground: oklch(0.99 0.01 150);
+  --accent-2: oklch(0.6 0.13 195);
+  --secondary: oklch(0.96 0.008 150);
+  --secondary-foreground: oklch(0.22 0.03 155);
+  --muted: oklch(0.97 0.005 150);
+  --muted-foreground: oklch(0.48 0.02 155);
+  --accent: oklch(0.95 0.04 145);
+  --accent-foreground: oklch(0.22 0.05 150);
+  --border: oklch(0.2 0.02 155 / 12%);
+  --input: oklch(0.2 0.02 155 / 16%);
+  --ring: oklch(0.62 0.17 142);
+  --ink: oklch(0.14 0.016 155);
+  --ink-foreground: oklch(0.98 0.006 150);
+  --shadow-card:
+    0 1px 2px oklch(0.3 0.05 155 / 0.06), 0 8px 24px -8px oklch(0.3 0.05 155 / 0.12),
+    0 24px 48px -24px oklch(0.3 0.05 155 / 0.16);
+  --shadow-float:
+    0 2px 4px oklch(0.3 0.05 155 / 0.08), 0 16px 40px -12px oklch(0.3 0.05 155 / 0.16),
+    0 48px 80px -32px oklch(0.3 0.05 155 / 0.2);
+  --glass-bg: oklch(1 0 0 / 0.7);
+  --glass-border: oklch(0.2 0.02 155 / 0.1);
+  --gradient-text: linear-gradient(
+    100deg,
+    oklch(0.2 0.02 155) 0%,
+    oklch(0.4 0.1 150) 45%,
+    oklch(0.62 0.17 142) 100%
+  );
 }
 
 @layer base {
@@ -155,85 +212,298 @@
     border-color: var(--color-border);
   }
 
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
+    font-family: var(--font-sans);
+    font-synthesis-weight: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
   }
 
-  html {
-    scroll-behavior: smooth;
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    letter-spacing: -0.022em;
   }
 
-  /* Keyboard focus stays obvious everywhere. */
+  ::selection {
+    background: oklch(0.78 0.19 142 / 0.3);
+  }
+
   :focus-visible {
     outline: 2px solid var(--color-primary);
-    outline-offset: 2px;
-    border-radius: 2px;
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  /* A restrained scrollbar rather than the OS default. */
+  ::-webkit-scrollbar {
+    width: 11px;
+    height: 11px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--color-background);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: oklch(1 0 0 / 0.14);
+    border: 3px solid var(--color-background);
+    border-radius: 99px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: oklch(1 0 0 / 0.24);
   }
 }
 
-/*
- * Motion.
- *
- * Every hidden state below is scoped to `.js`, which an inline script in the
- * document head adds before first paint. If JavaScript is unavailable the class
- * is never set and all content renders visible — animation is an enhancement,
- * never a prerequisite for reading the page.
- */
 @layer components {
+  /* ---------- surfaces ---------- */
+
+  /* Frosted panel. The inset highlight is what sells the glass. */
+  .glass {
+    background: var(--glass-bg);
+    backdrop-filter: blur(16px) saturate(1.4);
+    -webkit-backdrop-filter: blur(16px) saturate(1.4);
+    border: 1px solid var(--glass-border);
+    box-shadow:
+      inset 0 1px 0 oklch(1 0 0 / 0.08),
+      var(--shadow-card);
+  }
+
+  /* Gradient hairline border, drawn with a mask so the fill stays transparent. */
+  .ring-gradient {
+    position: relative;
+  }
+  .ring-gradient::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(
+      140deg,
+      oklch(1 0 0 / 0.25),
+      oklch(1 0 0 / 0.02) 40%,
+      oklch(0.78 0.19 142 / 0.35)
+    );
+    -webkit-mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+
+  .text-gradient {
+    background: var(--gradient-text);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* Small uppercase label, monospaced — reads as engineering, not marketing. */
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--color-muted-foreground);
+  }
+
+  /* ---------- backdrops ---------- */
+
+  /* Slow-drifting colour wash. Reads as motion without shipping a video file. */
+  .aurora {
+    position: absolute;
+    inset: -30%;
+    background:
+      radial-gradient(38% 44% at 22% 30%, oklch(0.78 0.19 142 / 0.4) 0%, transparent 70%),
+      radial-gradient(34% 40% at 78% 26%, oklch(0.72 0.14 195 / 0.34) 0%, transparent 70%),
+      radial-gradient(42% 46% at 58% 80%, oklch(0.66 0.16 168 / 0.28) 0%, transparent 72%);
+    filter: blur(50px);
+    animation: aurora-drift 22s ease-in-out infinite alternate;
+    will-change: transform;
+  }
+
+  @keyframes aurora-drift {
+    0% {
+      transform: translate3d(-3%, -2%, 0) scale(1);
+    }
+    50% {
+      transform: translate3d(3%, 2%, 0) scale(1.08);
+    }
+    100% {
+      transform: translate3d(-2%, 3%, 0) scale(1.03);
+    }
+  }
+
+  /* Engineering grid, faded out towards the edges. */
+  .grid-lines {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(to right, oklch(1 0 0 / 0.055) 1px, transparent 1px),
+      linear-gradient(to bottom, oklch(1 0 0 / 0.055) 1px, transparent 1px);
+    background-size: 72px 72px;
+    mask-image: radial-gradient(ellipse 80% 70% at 50% 40%, #000 30%, transparent 78%);
+  }
+
+  .noise {
+    position: absolute;
+    inset: 0;
+    opacity: 0.035;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* ---------- 3D ---------- */
+
+  .tilt-scene {
+    perspective: 1000px;
+  }
+
+  .tilt {
+    transform-style: preserve-3d;
+    transition: transform 400ms cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: transform;
+  }
+
+  /* Pushed forward on the Z axis so it separates under tilt. */
+  .tilt-layer {
+    transform: translateZ(38px);
+    transition: transform 400ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  /* Specular sheen that follows the cursor; positioned by --mx / --my. */
+  .tilt-sheen::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: radial-gradient(
+      36% 44% at var(--mx, 50%) var(--my, 50%),
+      oklch(1 0 0 / 0.16) 0%,
+      transparent 72%
+    );
+    opacity: 0;
+    transition: opacity 300ms ease;
+    pointer-events: none;
+  }
+  .tilt-sheen:hover::after {
+    opacity: 1;
+  }
+
+  /* ---------- motion ---------- */
+
   .js .reveal {
     opacity: 0;
     transition:
-      opacity 600ms cubic-bezier(0.22, 1, 0.36, 1),
-      transform 600ms cubic-bezier(0.22, 1, 0.36, 1);
+      opacity 750ms cubic-bezier(0.22, 1, 0.36, 1),
+      transform 750ms cubic-bezier(0.22, 1, 0.36, 1),
+      filter 750ms cubic-bezier(0.22, 1, 0.36, 1);
     will-change: opacity, transform;
   }
 
   .js .reveal-up {
-    transform: translateY(20px);
+    transform: translateY(28px);
+    filter: blur(6px);
   }
   .js .reveal-left {
-    transform: translateX(-20px);
+    transform: translateX(-28px);
+    filter: blur(6px);
   }
   .js .reveal-right {
-    transform: translateX(20px);
+    transform: translateX(28px);
+    filter: blur(6px);
   }
 
   .js .reveal.is-visible {
     opacity: 1;
     transform: none;
+    filter: none;
     will-change: auto;
   }
 
-  /*
-   * Above-the-fold entrance. Pure CSS on purpose: it plays as soon as styles
-   * apply, so the hero never waits on hydration the way .reveal does, and it
-   * needs no `.js` gate because it ends in the visible state regardless.
-   */
   @keyframes enter-up {
     from {
       opacity: 0;
-      transform: translateY(16px);
+      transform: translateY(22px);
+      filter: blur(8px);
     }
     to {
       opacity: 1;
       transform: none;
+      filter: none;
     }
   }
 
   .animate-enter {
-    animation: enter-up 700ms cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation: enter-up 900ms cubic-bezier(0.22, 1, 0.36, 1) both;
   }
 
-  /* Cards lift slightly on hover; the image scale lives on the child. */
+  @keyframes float-y {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+  .animate-float {
+    animation: float-y 7s ease-in-out infinite;
+  }
+
+  @keyframes pulse-ring {
+    0% {
+      box-shadow: 0 0 0 0 oklch(0.78 0.19 142 / 0.5);
+    }
+    70% {
+      box-shadow: 0 0 0 10px oklch(0.78 0.19 142 / 0);
+    }
+    100% {
+      box-shadow: 0 0 0 0 oklch(0.78 0.19 142 / 0);
+    }
+  }
+  .animate-pulse-ring {
+    animation: pulse-ring 2.4s ease-out infinite;
+  }
+
+  /* Continuous logo ribbon. Duplicate the track in markup for a seamless loop. */
+  @keyframes marquee {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+  .animate-marquee {
+    animation: marquee 42s linear infinite;
+  }
+  .marquee-mask {
+    mask-image: linear-gradient(to right, transparent, #000 12%, #000 88%, transparent);
+  }
+
   .card-lift {
-    transition: transform 300ms cubic-bezier(0.22, 1, 0.36, 1);
+    transition:
+      transform 400ms cubic-bezier(0.22, 1, 0.36, 1),
+      box-shadow 400ms cubic-bezier(0.22, 1, 0.36, 1);
   }
   .card-lift:hover {
-    transform: translateY(-4px);
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-float);
   }
 
-  /* Animated underline for text links in the nav. */
   .link-underline {
     position: relative;
   }
@@ -241,13 +511,14 @@
     content: "";
     position: absolute;
     left: 0;
-    bottom: -3px;
-    height: 1.5px;
+    bottom: -6px;
+    height: 2px;
     width: 100%;
-    background-color: currentColor;
+    border-radius: 2px;
+    background: var(--gradient-primary);
     transform: scaleX(0);
     transform-origin: right;
-    transition: transform 250ms cubic-bezier(0.22, 1, 0.36, 1);
+    transition: transform 300ms cubic-bezier(0.22, 1, 0.36, 1);
   }
   .link-underline:hover::after,
   .link-underline[data-status="active"]::after {
@@ -256,10 +527,6 @@
   }
 }
 
-/*
- * Anyone who has asked their OS to reduce motion gets no movement at all —
- * content is simply shown.
- */
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -271,14 +538,21 @@
   .js .reveal-right {
     opacity: 1;
     transform: none;
+    filter: none;
     transition: none;
   }
 
-  .card-lift,
+  .aurora,
+  .animate-marquee,
+  .animate-float,
+  .animate-pulse-ring,
+  .animate-enter {
+    animation: none !important;
+  }
+
   .card-lift:hover,
-  .link-underline::after {
-    transition: none;
-    transform: none;
+  .tilt {
+    transform: none !important;
   }
 
   *,

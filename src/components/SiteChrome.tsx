@@ -1,4 +1,5 @@
 import { Link, useLocation, useParams } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
 import { Globe } from "lucide-react";
 import { PROFILE } from "@/data/profile";
 import {
@@ -14,19 +15,26 @@ import { t } from "@/i18n/ui";
 import { SITE_NAME, SITE_TAGLINE } from "@/lib/seo";
 import { cn } from "@/lib/utils";
 
-const navLink = "link-underline text-sm transition-colors hover:text-primary";
-const activeNav = { className: "text-primary" };
-
 /** Reads the locale straight from the path so the chrome works on every route. */
 function useLocale(): Locale {
   const segment = useLocation({ select: (l) => l.pathname.split("/")[1] });
   return isLocale(segment) ? segment : DEFAULT_LOCALE;
 }
 
-/**
- * Switching language keeps the reader where they are: the same project page in
- * the new language, not the home page.
- */
+/** True once the page has scrolled past the hero's first fold. */
+function useScrolled(threshold = 24) {
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > threshold);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, [threshold]);
+
+  return scrolled;
+}
+
 function LanguageSwitcher({ locale }: { locale: Locale }) {
   const pathname = useLocation({ select: (l) => l.pathname });
   const params = useParams({ strict: false }) as { slug?: string };
@@ -34,15 +42,15 @@ function LanguageSwitcher({ locale }: { locale: Locale }) {
 
   const linkClass = (code: Locale) =>
     cn(
-      "rounded px-1.5 py-0.5 text-xs font-medium transition-colors",
+      "rounded-full px-2.5 py-1 font-mono text-xs font-medium tracking-wide transition-all duration-300",
       code === locale
-        ? "bg-primary text-primary-foreground"
-        : "text-ink-foreground/60 hover:text-primary",
+        ? "bg-primary text-primary-foreground shadow-[0_0_18px_-4px_oklch(0.78_0.19_142/0.7)]"
+        : "text-foreground/55 hover:bg-white/5 hover:text-foreground",
     );
 
   return (
-    <div className="flex items-center gap-1">
-      <Globe aria-hidden className="mr-1 size-4 text-ink-foreground/50" />
+    <div className="glass flex items-center gap-1 rounded-full px-1.5 py-1">
+      <Globe aria-hidden className="ml-1 size-3.5 text-foreground/55" />
       <span className="sr-only">{t(locale).languageLabel}</span>
       {LOCALES.map((code) => {
         const shared = {
@@ -86,25 +94,56 @@ function LanguageSwitcher({ locale }: { locale: Locale }) {
 export function SiteHeader() {
   const locale = useLocale();
   const s = t(locale);
+  const scrolled = useScrolled();
+
+  const navLink =
+    "link-underline font-medium text-foreground/70 transition-colors hover:text-foreground";
 
   return (
-    <header className="bg-ink text-ink-foreground">
-      <nav className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 px-6 py-4">
+    <header
+      className={cn(
+        "fixed inset-x-0 top-0 z-50 transition-all duration-500",
+        // Transparent over the hero, frosted once the content scrolls under it.
+        scrolled
+          ? "border-b border-white/10 bg-background/70 backdrop-blur-xl backdrop-saturate-150"
+          : "border-b border-transparent bg-transparent",
+      )}
+    >
+      <nav
+        className={cn(
+          "mx-auto flex max-w-7xl items-center justify-between gap-6 px-6 transition-all duration-500 lg:px-10",
+          scrolled ? "h-20" : "h-28",
+        )}
+      >
         <Link
           to="/$locale"
           params={{ locale }}
           aria-label={`${SITE_NAME} — ${s.homeLink}`}
-          className="text-lg font-bold tracking-tight"
+          className="group flex items-center gap-3"
         >
-          dylan<span className="text-primary">lee</span>
+          <span
+            aria-hidden
+            className="grid size-11 place-items-center rounded-xl font-display text-base font-bold text-primary-foreground shadow-[var(--shadow-glow)] transition-transform duration-500 group-hover:scale-105"
+            style={{ backgroundImage: "var(--gradient-primary)" }}
+          >
+            DL
+          </span>
+          <span className="hidden flex-col leading-tight sm:flex">
+            <span className="font-display text-lg font-semibold tracking-tight">
+              {PROFILE.name}
+            </span>
+            <span className="font-mono text-[0.7rem] tracking-wider text-foreground/60">
+              {PROFILE_I18N[locale].role}
+            </span>
+          </span>
         </Link>
 
-        <div className="flex items-center gap-6">
+        <div className="flex items-center gap-7 sm:gap-9">
           <Link
             to="/$locale"
             params={{ locale }}
             className={navLink}
-            activeProps={activeNav}
+            activeProps={{ className: "text-foreground" }}
             activeOptions={{ exact: true }}
           >
             {s.navAbout}
@@ -113,7 +152,7 @@ export function SiteHeader() {
             to="/$locale/projects"
             params={{ locale }}
             className={navLink}
-            activeProps={activeNav}
+            activeProps={{ className: "text-foreground" }}
           >
             {s.navProjects}
           </Link>
@@ -129,15 +168,26 @@ export function SiteFooter() {
   const profile = PROFILE_I18N[locale];
 
   return (
-    <footer className="bg-ink text-ink-foreground/60">
-      <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-2 px-6 py-8 text-sm">
-        <p>
-          © {new Date().getFullYear()} {PROFILE.name} —{" "}
-          {locale === "en" ? SITE_TAGLINE : profile.headline}
-        </p>
-        <p>
-          {profile.location} · {profile.languages}
-        </p>
+    <footer className="relative mt-32 overflow-hidden border-t border-white/10 bg-ink text-ink-foreground">
+      <div aria-hidden className="grid-lines opacity-60" />
+      <div className="relative mx-auto max-w-7xl px-6 py-16 lg:px-10">
+        <div className="flex flex-wrap items-end justify-between gap-8">
+          <div>
+            <p className="font-display text-3xl font-semibold tracking-tight">
+              <span className="text-gradient">{PROFILE.name}</span>
+            </p>
+            <p className="mt-2 max-w-md text-ink-foreground/65">
+              {locale === "en" ? SITE_TAGLINE : profile.headline}
+            </p>
+          </div>
+          <div className="font-mono text-xs tracking-wider text-ink-foreground/60">
+            <p>{profile.location.toUpperCase()}</p>
+            <p className="mt-1">{profile.languages}</p>
+          </div>
+        </div>
+        <div className="mt-12 border-t border-white/10 pt-6 font-mono text-xs text-ink-foreground/65">
+          © {new Date().getFullYear()} {PROFILE.name}
+        </div>
       </div>
     </footer>
   );

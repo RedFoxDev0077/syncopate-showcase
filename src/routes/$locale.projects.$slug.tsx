@@ -52,13 +52,13 @@ function ProjectNotFound() {
   const { locale } = Route.useParams() as { locale: Locale };
   const s = t(locale);
   return (
-    <main className="mx-auto max-w-3xl px-6 py-24 text-center">
-      <h1 className="text-2xl font-semibold">{s.projectNotFound}</h1>
-      <p className="mt-2 text-muted-foreground">{s.projectNotFoundBody}</p>
+    <main className="mx-auto max-w-3xl px-6 py-32 text-center">
+      <h1 className="font-display text-4xl font-bold">{s.projectNotFound}</h1>
+      <p className="mt-4 text-lg text-foreground/55">{s.projectNotFoundBody}</p>
       <Link
         to="/$locale/projects"
         params={{ locale }}
-        className="mt-6 inline-block text-primary hover:underline"
+        className="glass mt-8 inline-flex rounded-full px-6 py-3 font-medium text-primary transition-colors hover:bg-primary/10"
       >
         {s.backToAllProjects}
       </Link>
@@ -100,23 +100,30 @@ function ProjectDetail() {
         }}
       />
 
-      <section className="bg-ink text-ink-foreground">
-        <div className="mx-auto max-w-6xl px-6 py-14">
+      <section className="relative -mt-28 overflow-hidden pt-28">
+        <div aria-hidden className="absolute inset-0 -z-30 bg-ink" />
+        <div aria-hidden className="aurora -z-20 opacity-60" />
+        <div aria-hidden className="grid-lines -z-10" />
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-x-0 bottom-0 -z-10 h-32 bg-gradient-to-b from-transparent to-background"
+        />
+        <div className="relative mx-auto max-w-7xl px-6 py-20 lg:px-10">
           <Link
             to="/$locale/projects"
             params={{ locale }}
-            className="inline-flex items-center gap-2 text-sm text-ink-foreground/70 transition-colors hover:text-primary"
+            className="glass inline-flex items-center gap-2 rounded-full px-4 py-2 font-mono text-xs tracking-wider transition-colors hover:text-primary"
           >
             <ArrowLeft className="size-4" /> {s.allProjects}
           </Link>
           <h1
-            className="animate-enter mt-6 max-w-3xl text-3xl font-bold leading-tight sm:text-4xl"
+            className="animate-enter mt-8 max-w-4xl font-display text-4xl font-bold leading-[1.08] sm:text-5xl lg:text-6xl"
             style={{ animationDelay: "60ms" }}
           >
             {project.title}
           </h1>
           <p
-            className="animate-enter mt-4 max-w-2xl text-ink-foreground/75"
+            className="animate-enter mt-7 max-w-3xl text-lg leading-relaxed text-ink-foreground/60"
             style={{ animationDelay: "140ms" }}
           >
             {project.excerpt}
@@ -128,7 +135,7 @@ function ProjectDetail() {
             {tags.map((v) => (
               <span
                 key={v}
-                className="rounded-full bg-primary px-3 py-1 text-xs font-medium text-primary-foreground"
+                className="glass rounded-full px-3.5 py-1.5 font-mono text-xs tracking-wide text-foreground/70"
               >
                 {tag(locale, v)}
               </span>
@@ -137,28 +144,28 @@ function ProjectDetail() {
         </div>
       </section>
 
-      <div className="mx-auto max-w-6xl px-6 py-12">
+      <div className="mx-auto max-w-7xl px-6 py-16 lg:px-10">
         <Reveal
-          className="overflow-hidden rounded-2xl p-4 shadow-[var(--shadow-card)]"
-          style={{ backgroundImage: "var(--gradient-primary)" }}
+          className="ring-gradient overflow-hidden rounded-3xl"
+          style={{ boxShadow: "var(--shadow-float)" }}
         >
           <img
             src={project.image}
             alt={project.title}
-            className="aspect-[16/8] w-full rounded-xl object-cover"
+            className="aspect-[16/8] w-full object-cover"
           />
         </Reveal>
 
-        <div className="mt-12 grid gap-12 lg:grid-cols-[1fr_280px]">
+        <div className="mt-16 grid gap-14 lg:grid-cols-[1fr_320px]">
           <Reveal>
-            <h2 className="text-2xl font-semibold">{s.theChallenge}</h2>
-            <p className="mt-3 text-muted-foreground">{project.challenge}</p>
+            <h2 className="font-display text-3xl font-bold">{s.theChallenge}</h2>
+            <p className="mt-5 text-lg leading-relaxed text-foreground/60">{project.challenge}</p>
 
-            <h2 className="mt-10 text-2xl font-semibold">{s.ourSolution}</h2>
+            <h2 className="mt-14 font-display text-3xl font-bold">{s.ourSolution}</h2>
             <ul className="mt-4 space-y-3">
               {project.solution.map((item) => (
-                <li key={item} className="flex gap-3 text-muted-foreground">
-                  <span className="mt-2 size-1.5 shrink-0 rounded-full bg-primary" />
+                <li key={item} className="flex gap-4 text-lg text-foreground/60">
+                  <span className="mt-3 size-1.5 shrink-0 rounded-full bg-primary" />
                   {item}
                 </li>
               ))}
@@ -166,13 +173,13 @@ function ProjectDetail() {
 
             {(project.results.length > 0 || project.outcomes.length > 0) && (
               <>
-                <h2 className="mt-10 text-2xl font-semibold">{s.results}</h2>
+                <h2 className="mt-14 font-display text-3xl font-bold">{s.results}</h2>
                 {project.results.length > 0 && (
                   <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
                     {project.results.map((r) => (
-                      <div key={r.label} className="rounded-xl border border-border bg-muted p-5">
-                        <p className="text-2xl font-bold text-primary">{r.value}</p>
-                        <p className="mt-1 text-sm text-muted-foreground">{r.label}</p>
+                      <div key={r.label} className="glass ring-gradient rounded-2xl p-6">
+                        <p className="font-display text-3xl font-bold text-gradient">{r.value}</p>
+                        <p className="mt-2 text-sm leading-snug text-foreground/60">{r.label}</p>
                       </div>
                     ))}
                   </div>
@@ -180,8 +187,8 @@ function ProjectDetail() {
                 {project.outcomes.length > 0 && (
                   <ul className="mt-4 space-y-3">
                     {project.outcomes.map((item) => (
-                      <li key={item} className="flex gap-3 text-muted-foreground">
-                        <span className="mt-2 size-1.5 shrink-0 rounded-full bg-primary" />
+                      <li key={item} className="flex gap-4 text-lg text-foreground/60">
+                        <span className="mt-3 size-1.5 shrink-0 rounded-full bg-primary" />
                         {item}
                       </li>
                     ))}
@@ -195,50 +202,50 @@ function ProjectDetail() {
             as="aside"
             from="right"
             delay={120}
-            className="h-fit rounded-2xl border border-border bg-muted p-6 text-sm"
+            className="glass ring-gradient h-fit rounded-3xl p-7"
           >
             <dl className="space-y-4">
               {project.client && (
                 <div>
-                  <dt className="text-muted-foreground">{s.client}</dt>
-                  <dd className="mt-1 font-medium">{project.client}</dd>
+                  <dt className="eyebrow">{s.client}</dt>
+                  <dd className="mt-2 font-medium">{project.client}</dd>
                 </div>
               )}
               {project.duration && (
                 <div>
-                  <dt className="text-muted-foreground">{s.duration}</dt>
-                  <dd className="mt-1 font-medium">{project.duration}</dd>
+                  <dt className="eyebrow">{s.duration}</dt>
+                  <dd className="mt-2 font-medium">{project.duration}</dd>
                 </div>
               )}
               {project.services.length > 0 && (
                 <div>
-                  <dt className="text-muted-foreground">{s.services}</dt>
-                  <dd className="mt-1 font-medium">
+                  <dt className="eyebrow">{s.services}</dt>
+                  <dd className="mt-2 font-medium">
                     {project.services.map((v) => tag(locale, v)).join(", ")}
                   </dd>
                 </div>
               )}
               {project.industries.length > 0 && (
                 <div>
-                  <dt className="text-muted-foreground">{s.industry}</dt>
-                  <dd className="mt-1 font-medium">
+                  <dt className="eyebrow">{s.industry}</dt>
+                  <dd className="mt-2 font-medium">
                     {project.industries.map((v) => tag(locale, v)).join(", ")}
                   </dd>
                 </div>
               )}
               {project.technologies.length > 0 && (
                 <div>
-                  <dt className="text-muted-foreground">{s.technologies}</dt>
-                  <dd className="mt-1 font-medium">{project.technologies.join(", ")}</dd>
+                  <dt className="eyebrow">{s.technologies}</dt>
+                  <dd className="mt-2 font-medium">{project.technologies.join(", ")}</dd>
                 </div>
               )}
             </dl>
           </Reveal>
         </div>
 
-        <Reveal as="section" className="mt-16 border-t border-border pt-10">
-          <h2 className="text-xl font-semibold">{s.moreProjects}</h2>
-          <div className="mt-6 grid gap-8 md:grid-cols-2">
+        <Reveal as="section" className="mt-24 border-t border-white/10 pt-14">
+          <h2 className="font-display text-3xl font-bold">{s.moreProjects}</h2>
+          <div className="mt-10 grid gap-8 md:grid-cols-2">
             {others.map((other) => (
               <Link
                 key={other.slug}
@@ -250,9 +257,9 @@ function ProjectDetail() {
                   src={other.image}
                   alt={other.title}
                   loading="lazy"
-                  className="aspect-[16/9] w-full rounded-xl object-cover"
+                  className="aspect-[16/9] w-full rounded-2xl object-cover transition-transform duration-700 group-hover:scale-[1.04]"
                 />
-                <h3 className="mt-3 font-semibold transition-colors group-hover:text-primary">
+                <h3 className="mt-4 font-display text-lg font-semibold transition-colors group-hover:text-primary">
                   {other.title}
                 </h3>
               </Link>
