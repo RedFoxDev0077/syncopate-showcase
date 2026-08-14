@@ -1,8 +1,8 @@
 Photography from Unsplash, used under the Unsplash License
 (https://unsplash.com/license) — free for commercial use, no attribution
-required. Credit kept here as a courtesy and to record provenance.
+required. Recorded here for provenance.
 
-hero-devs.jpg     https://unsplash.com/photos/1531482615713-2afd69097998
-work-desk.jpg     https://unsplash.com/photos/1498050108023-c5249f4df085
-team-working.jpg  https://unsplash.com/photos/1521737604893-d14cc237f11d
-client-talk.jpg   https://unsplash.com/photos/1517245386807-bb43f82c33c4
+hero-hud.jpg   glowing circuit schematic  photo-1550751827-4bd374c3f58b
+circuit.jpg    circuit board macro        photo-1518770660439-4636190af475
+coderain.jpg   green data rain            photo-1526374965328-7f61d4dc18c5
+network.jpg    3D network render          photo-1639762681485-074b7f938ba0

@@ -19,7 +19,7 @@ import { SITE_NAME, SITE_TAGLINE, absoluteUrl, alternateLinks, localeUrl } from 
 /* Real photography rather than abstract renders: developers actually working,
    which is what the page is about. Each sits under a heavy scrim — a busy
    photo needs far more separation from text than a flat gradient does. */
-const HERO_IMAGE = "/img/hero-devs.jpg";
+const HERO_IMAGE = "/img/hero-hud.jpg";
 
 export const Route = createFileRoute("/$locale/")({
   head: ({ params }) => {
@@ -78,15 +78,15 @@ function PortfolioHome() {
           alt=""
           aria-hidden="true"
           fetchPriority="high"
-          className="pointer-events-none absolute inset-0 -z-20 size-full object-cover opacity-35"
+          className="pointer-events-none absolute inset-0 -z-20 size-full object-cover opacity-[0.55]"
         />
         {/* Left-weighted scrim keeps the headline fully legible over the photo. */}
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-0 -z-20 bg-gradient-to-r from-ink via-ink/92 to-ink/45"
+          className="pointer-events-none absolute inset-0 -z-20 bg-gradient-to-r from-ink/95 via-ink/70 to-ink/25"
         />
-        <div aria-hidden className="aurora -z-20 opacity-70" />
-        <HeroCanvas className="pointer-events-none absolute inset-0 -z-10 size-full opacity-60" />
+        <div aria-hidden className="aurora -z-20 opacity-50" />
+        <HeroCanvas className="pointer-events-none absolute inset-0 -z-10 size-full opacity-45" />
         <div
           aria-hidden
           className="pointer-events-none absolute inset-x-0 bottom-0 -z-10 h-48 bg-gradient-to-b from-transparent to-background"
@@ -199,15 +199,15 @@ function PortfolioHome() {
       {/* ---------------- about ---------------- */}
       <section className="relative overflow-hidden py-28">
         <img
-          src="/img/work-desk.jpg"
+          src="/img/circuit.jpg"
           alt=""
           aria-hidden="true"
           loading="lazy"
-          className="pointer-events-none absolute inset-0 -z-20 size-full object-cover opacity-[0.07]"
+          className="pointer-events-none absolute inset-0 -z-20 size-full object-cover opacity-[0.28]"
         />
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-b from-background via-background/90 to-background"
+          className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-b from-background via-background/80 to-background"
         />
         <div className="relative mx-auto grid max-w-7xl gap-16 px-6 lg:grid-cols-[1.15fr_minmax(0,380px)] lg:px-10">
           <Reveal>
@@ -286,15 +286,15 @@ function PortfolioHome() {
       {/* ---------------- toolkit ---------------- */}
       <section className="relative overflow-hidden py-28">
         <img
-          src="/img/team-working.jpg"
+          src="/img/coderain.jpg"
           alt=""
           aria-hidden="true"
           loading="lazy"
-          className="pointer-events-none absolute inset-0 -z-20 size-full object-cover opacity-[0.09]"
+          className="pointer-events-none absolute inset-0 -z-20 size-full object-cover opacity-[0.3]"
         />
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-b from-background via-background/88 to-background"
+          className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-b from-background via-background/78 to-background"
         />
         <div aria-hidden className="grid-lines opacity-40" />
         <div className="relative mx-auto max-w-7xl px-6 lg:px-10">
@@ -417,15 +417,15 @@ function PortfolioHome() {
       {/* ---------------- testimonials ---------------- */}
       <section className="relative overflow-hidden py-28">
         <img
-          src="/img/client-talk.jpg"
+          src="/img/network.jpg"
           alt=""
           aria-hidden="true"
           loading="lazy"
-          className="pointer-events-none absolute inset-0 -z-20 size-full object-cover opacity-[0.13]"
+          className="pointer-events-none absolute inset-0 -z-20 size-full object-cover opacity-[0.26]"
         />
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-b from-background via-background/85 to-background"
+          className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-b from-background via-background/75 to-background"
         />
 
         <div className="relative mx-auto max-w-7xl px-6 lg:px-10">
