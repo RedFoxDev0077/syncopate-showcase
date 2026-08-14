@@ -87,6 +87,8 @@ export const PROFILE = {
 
 export type Testimonial = {
   author: string;
+  /** Stars awarded on the platform. Every review to date is a five. */
+  rating: number;
   project: string;
   when: string;
   /** Original review text, in the language it was written. */
@@ -99,6 +101,7 @@ export type Testimonial = {
 export const TESTIMONIALS: Testimonial[] = [
   {
     author: "gustavo auler",
+    rating: 5,
     project: "Game engine for simultaneous PvP and web integrations",
     when: "Last month",
     quote:
@@ -109,6 +112,7 @@ export const TESTIMONIALS: Testimonial[] = [
   },
   {
     author: "Denis Jesus",
+    rating: 5,
     project: "ManyChat, Make.com and AI integration for WhatsApp support",
     when: "Last month",
     quote:
@@ -119,6 +123,7 @@ export const TESTIMONIALS: Testimonial[] = [
   },
   {
     author: "Matias Price",
+    rating: 5,
     project: "Editing and updating an existing website: structure, content and design",
     when: "3 weeks ago",
     quote:
@@ -129,6 +134,7 @@ export const TESTIMONIALS: Testimonial[] = [
   },
   {
     author: "Carlos Hermida Alvarez",
+    rating: 5,
     project: "Premium lead-oriented corporate web development for Hermgrau",
     when: "4 weeks ago",
     quote: "",

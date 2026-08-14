@@ -100,15 +100,14 @@ function ProjectDetail() {
         }}
       />
 
-      <section className="relative -mt-28 overflow-hidden pt-28">
-        <div aria-hidden className="absolute inset-0 -z-30 bg-ink" />
-        <div aria-hidden className="aurora -z-20 opacity-60" />
-        <div aria-hidden className="grid-lines -z-10" />
+      <section className="relative isolate -mt-28 overflow-hidden bg-ink pt-28">
+        <div aria-hidden className="aurora opacity-50" />
+        <div aria-hidden className="grid-lines opacity-60" />
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-x-0 bottom-0 -z-10 h-32 bg-gradient-to-b from-transparent to-background"
+          className="pointer-events-none absolute inset-x-0 bottom-0 h-32 bg-gradient-to-b from-transparent to-background"
         />
-        <div className="relative mx-auto max-w-7xl px-6 py-20 lg:px-10">
+        <div className="relative z-10 mx-auto max-w-7xl px-6 py-20 lg:px-10">
           <Link
             to="/$locale/projects"
             params={{ locale }}

@@ -1,12 +1,11 @@
 import { Link, createFileRoute } from "@tanstack/react-router";
-import { ArrowRight, ArrowUpRight, MousePointerClick, Quote, Star } from "lucide-react";
-import { Avatar } from "@/components/Avatar";
+import { ArrowRight, ArrowUpRight, BadgeCheck, MousePointerClick, Quote, Star } from "lucide-react";
 import { CountUp } from "@/components/CountUp";
 import { HeroCanvas } from "@/components/HeroCanvas";
 import { JsonLd } from "@/components/JsonLd";
 import { OrbitCore } from "@/components/OrbitCore";
 import { Reveal } from "@/components/Reveal";
-import { TechIcon } from "@/components/TechIcon";
+import { TechIcon, techSlug } from "@/components/TechIcon";
 import { TiltCard } from "@/components/TiltCard";
 import { PROFILE, REVIEW_SUMMARY, TESTIMONIALS } from "@/data/profile";
 import { PROJECTS } from "@/data/projects";
@@ -19,7 +18,7 @@ import { SITE_NAME, SITE_TAGLINE, absoluteUrl, alternateLinks, localeUrl } from 
 /* Real photography rather than abstract renders: developers actually working,
    which is what the page is about. Each sits under a heavy scrim — a busy
    photo needs far more separation from text than a flat gradient does. */
-const HERO_IMAGE = "/img/hero-hud.jpg";
+const HERO_IMAGE = "/img/hero-ar.jpg";
 
 export const Route = createFileRoute("/$locale/")({
   head: ({ params }) => {
@@ -71,28 +70,35 @@ function PortfolioHome() {
 
       {/* ---------------- hero ---------------- */}
       {/* -mt-28 cancels the root's header offset so the backdrop runs full-bleed. */}
-      <section className="relative -mt-28 flex min-h-svh items-center overflow-hidden pt-28">
-        <div aria-hidden className="absolute inset-0 -z-30 bg-ink" />
+      {/*
+        `isolate` is load-bearing: it makes this section its own stacking
+        context. Without it the backdrop layers below would paint behind the
+        root wrapper's opaque background and vanish entirely. Layers are plain
+        absolute siblings in paint order — no negative z-index anywhere — and
+        the content sits above them on z-10.
+      */}
+      <section className="relative isolate -mt-28 flex min-h-svh items-center overflow-hidden bg-ink pt-28">
         <img
           src={HERO_IMAGE}
           alt=""
           aria-hidden="true"
           fetchPriority="high"
-          className="pointer-events-none absolute inset-0 -z-20 size-full object-cover opacity-[0.55]"
+          className="pointer-events-none absolute inset-0 size-full object-cover opacity-60"
         />
-        {/* Left-weighted scrim keeps the headline fully legible over the photo. */}
+        {/* Left-weighted wash: the headline needs contrast, the right side
+            keeps the photograph readable. */}
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-0 -z-20 bg-gradient-to-r from-ink/95 via-ink/70 to-ink/25"
+          className="pointer-events-none absolute inset-0 bg-gradient-to-r from-ink via-ink/75 to-ink/20"
         />
-        <div aria-hidden className="aurora -z-20 opacity-50" />
-        <HeroCanvas className="pointer-events-none absolute inset-0 -z-10 size-full opacity-45" />
+        <div aria-hidden className="aurora opacity-40" />
+        <HeroCanvas className="pointer-events-none absolute inset-0 size-full opacity-40" />
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-x-0 bottom-0 -z-10 h-48 bg-gradient-to-b from-transparent to-background"
+          className="pointer-events-none absolute inset-x-0 bottom-0 h-48 bg-gradient-to-b from-transparent to-background"
         />
 
-        <div className="mx-auto grid w-full max-w-7xl items-center gap-20 px-6 py-24 lg:grid-cols-[1fr_minmax(0,460px)] lg:px-10">
+        <div className="relative z-10 mx-auto grid w-full max-w-7xl items-center gap-20 px-6 py-24 lg:grid-cols-[1fr_minmax(0,460px)] lg:px-10">
           <div>
             <p className="animate-enter glass inline-flex items-center gap-3 rounded-full px-5 py-2">
               <span className="relative flex size-2.5">
@@ -172,7 +178,7 @@ function PortfolioHome() {
 
         <span
           aria-hidden
-          className="animate-float absolute bottom-8 left-1/2 hidden -translate-x-1/2 flex-col items-center gap-2 font-mono text-xs uppercase tracking-[0.3em] text-foreground/40 lg:flex"
+          className="animate-float absolute bottom-8 left-1/2 z-10 hidden -translate-x-1/2 flex-col items-center gap-2 font-mono text-xs uppercase tracking-[0.3em] text-foreground/40 lg:flex"
         >
           {s.scrollHint}
           <span className="h-10 w-px bg-gradient-to-b from-primary to-transparent" />
@@ -197,19 +203,19 @@ function PortfolioHome() {
       </section>
 
       {/* ---------------- about ---------------- */}
-      <section className="relative overflow-hidden py-28">
+      <section className="relative isolate overflow-hidden py-28">
         <img
-          src="/img/circuit.jpg"
+          src="/img/dev-night.jpg"
           alt=""
           aria-hidden="true"
           loading="lazy"
-          className="pointer-events-none absolute inset-0 -z-20 size-full object-cover opacity-[0.28]"
+          className="pointer-events-none absolute inset-0 size-full object-cover opacity-45"
         />
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-b from-background via-background/80 to-background"
+          className="pointer-events-none absolute inset-0 bg-gradient-to-b from-background via-background/80 to-background"
         />
-        <div className="relative mx-auto grid max-w-7xl gap-16 px-6 lg:grid-cols-[1.15fr_minmax(0,380px)] lg:px-10">
+        <div className="relative z-10 mx-auto grid max-w-7xl gap-16 px-6 lg:grid-cols-[1.15fr_minmax(0,380px)] lg:px-10">
           <Reveal>
             <p className="eyebrow">{s.secProfile}</p>
             <h2 className="mt-6 max-w-3xl text-4xl leading-[1.15]">{profile.bio[0]}</h2>
@@ -284,20 +290,20 @@ function PortfolioHome() {
       </section>
 
       {/* ---------------- toolkit ---------------- */}
-      <section className="relative overflow-hidden py-28">
+      <section className="relative isolate overflow-hidden py-28">
         <img
-          src="/img/coderain.jpg"
+          src="/img/ar-lens.jpg"
           alt=""
           aria-hidden="true"
           loading="lazy"
-          className="pointer-events-none absolute inset-0 -z-20 size-full object-cover opacity-[0.3]"
+          className="pointer-events-none absolute inset-0 size-full object-cover opacity-40"
         />
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-b from-background via-background/78 to-background"
+          className="pointer-events-none absolute inset-0 bg-gradient-to-b from-background via-background/78 to-background"
         />
-        <div aria-hidden className="grid-lines opacity-40" />
-        <div className="relative mx-auto max-w-7xl px-6 lg:px-10">
+        <div aria-hidden className="grid-lines opacity-30" />
+        <div className="relative z-10 mx-auto max-w-7xl px-6 lg:px-10">
           <Reveal>
             <p className="eyebrow">{s.secStack}</p>
             <h2 className="mt-6 text-4xl">{s.whatIWorkWith}</h2>
@@ -415,20 +421,20 @@ function PortfolioHome() {
       </section>
 
       {/* ---------------- testimonials ---------------- */}
-      <section className="relative overflow-hidden py-28">
+      <section className="relative isolate overflow-hidden py-28">
         <img
-          src="/img/network.jpg"
+          src="/img/coderain.jpg"
           alt=""
           aria-hidden="true"
           loading="lazy"
-          className="pointer-events-none absolute inset-0 -z-20 size-full object-cover opacity-[0.26]"
+          className="pointer-events-none absolute inset-0 size-full object-cover opacity-35"
         />
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-b from-background via-background/75 to-background"
+          className="pointer-events-none absolute inset-0 bg-gradient-to-b from-background via-background/75 to-background"
         />
 
-        <div className="relative mx-auto max-w-7xl px-6 lg:px-10">
+        <div className="relative z-10 mx-auto max-w-7xl px-6 lg:px-10">
           <Reveal className="flex flex-wrap items-center justify-between gap-6">
             <div>
               <p className="eyebrow">{s.secReviews}</p>
@@ -456,8 +462,29 @@ function PortfolioHome() {
                     i % 2 === 1 ? "clip-notch-tl rounded-3xl" : "rounded-leaf"
                   }`}
                 >
-                  <Quote className="size-8 shrink-0 text-primary/60" />
-                  <blockquote className="mt-6 flex-1">
+                  {/*
+                    No portrait. The signals that actually carry weight here are
+                    verifiable — the score, the date, and what was built — and a
+                    stock face beside a real reviewer's name would undercut all
+                    three the moment anyone reverse-searched it.
+                  */}
+                  <div className="flex flex-wrap items-center justify-between gap-3">
+                    <span
+                      className="flex items-center gap-1"
+                      aria-label={s.ratingOutOf(testimonial.rating.toFixed(1))}
+                    >
+                      {Array.from({ length: testimonial.rating }, (_, star) => (
+                        <Star key={star} aria-hidden className="size-4 fill-primary text-primary" />
+                      ))}
+                    </span>
+                    <span className="inline-flex items-center gap-1.5 rounded-full bg-primary/10 px-3 py-1 font-mono text-xs tracking-wide text-primary">
+                      <BadgeCheck aria-hidden className="size-3.5" />
+                      {s.verifiedReview}
+                    </span>
+                  </div>
+
+                  <Quote aria-hidden className="mt-7 size-8 shrink-0 text-primary/50" />
+                  <blockquote className="mt-5 flex-1">
                     <p className="text-xl leading-relaxed">
                       {testimonial.translation ?? testimonial.quote}
                     </p>
@@ -465,14 +492,48 @@ function PortfolioHome() {
                       <p className="mt-5 text-sm italic text-foreground/45">{testimonial.quote}</p>
                     )}
                   </blockquote>
-                  <figcaption className="mt-8 flex items-center gap-4 border-t border-white/10 pt-7">
-                    <Avatar name={testimonial.author} size={56} />
-                    <span>
-                      <span className="block font-display font-semibold">{testimonial.author}</span>
-                      <span className="mt-1 block text-sm text-foreground/55">
-                        {TESTIMONIAL_PROJECTS[locale][testimonial.author] ?? testimonial.project}
+
+                  <figcaption className="mt-8 border-t border-white/10 pt-7">
+                    <div className="flex items-center gap-4">
+                      {/* Monogram in the brand gradient — a designed mark, not a
+                          stand-in for a face. */}
+                      <span
+                        aria-hidden
+                        className="grid size-14 shrink-0 place-items-center rounded-2xl font-display text-lg font-bold text-primary-foreground shadow-[var(--shadow-glow)]"
+                        style={{ backgroundImage: "var(--gradient-primary)" }}
+                      >
+                        {testimonial.author
+                          .split(/\s+/)
+                          .filter(Boolean)
+                          .slice(0, 2)
+                          .map((part) => part[0]?.toUpperCase())
+                          .join("")}
                       </span>
-                    </span>
+                      <span className="min-w-0 flex-1">
+                        <span className="flex flex-wrap items-baseline justify-between gap-2">
+                          <span className="font-display text-lg font-semibold">
+                            {testimonial.author}
+                          </span>
+                          <span className="font-mono text-xs text-foreground/50">
+                            {testimonial.when}
+                          </span>
+                        </span>
+                        <span className="mt-1 block text-sm text-foreground/55">
+                          {TESTIMONIAL_PROJECTS[locale][testimonial.author] ?? testimonial.project}
+                        </span>
+                      </span>
+                    </div>
+                    <ul className="mt-5 flex flex-wrap gap-2">
+                      {testimonial.tags.slice(0, 5).map((label) => (
+                        <li
+                          key={label}
+                          className="inline-flex items-center gap-1.5 rounded-full border border-white/12 bg-white/5 px-3 py-1 font-mono text-xs text-foreground/60"
+                        >
+                          {techSlug(label) && <TechIcon label={label} className="size-3.5" />}
+                          {label}
+                        </li>
+                      ))}
+                    </ul>
                   </figcaption>
                 </div>
               </Reveal>

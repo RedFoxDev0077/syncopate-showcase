@@ -20,6 +20,8 @@ export type UiStrings = {
   scrollHint: string;
   viewProject: string;
   featured: string;
+  verifiedReview: string;
+  ratingOutOf: (n: string) => string;
 
   // Home
   viewAllProjects: (count: number) => string;
@@ -93,6 +95,8 @@ const en: UiStrings = {
   scrollHint: "Scroll",
   viewProject: "View project",
   featured: "Featured",
+  verifiedReview: "Verified client review",
+  ratingOutOf: (n) => `${n} out of 5`,
 
   viewAllProjects: (count) => `View all ${count} projects`,
   aboutMe: "About me",
@@ -162,6 +166,8 @@ const es: UiStrings = {
   scrollHint: "Desliza",
   viewProject: "Ver proyecto",
   featured: "Destacado",
+  verifiedReview: "Reseña verificada de cliente",
+  ratingOutOf: (n) => `${n} de 5`,
 
   viewAllProjects: (count) => `Ver los ${count} proyectos`,
   aboutMe: "Sobre mí",
@@ -231,6 +237,8 @@ const pt: UiStrings = {
   scrollHint: "Role",
   viewProject: "Ver projeto",
   featured: "Destaque",
+  verifiedReview: "Avaliação verificada de cliente",
+  ratingOutOf: (n) => `${n} de 5`,
 
   viewAllProjects: (count) => `Ver todos os ${count} projetos`,
   aboutMe: "Sobre mim",
